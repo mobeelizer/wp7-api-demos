@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
+  <App xmlns="" ProductID="{5240e600-1deb-4cbd-9368-3330ce569fdf}" Title="wp7_api_demos" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="wp7_api_demos author" Description="Sample description" Publisher="wp7_api_demos">
+    <IconPath IsRelative="true" IsResource="false">Resources/ApplicationIcon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_IDENTITY_DEVICE"/>
+      <Capability Name="ID_CAP_NETWORKING"/>
+      <Capability Name="ID_CAP_PUSH_NOTIFICATION"/>
+    </Capabilities>
+    <Tasks>
+      <DefaultTask  Name ="_default" NavigationPage="View/MainPage.xaml"/>
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="wp7_api_demosToken" TaskName="_default">
+        <TemplateType5>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Resources/Background.png</BackgroundImageURI>
+          <Count>0</Count>
+          <Title>wp7_api_demos</Title>
+        </TemplateType5>
+      </PrimaryToken>
+    </Tokens>
+  </App>
+</Deployment>
