@@ -7,48 +7,14 @@ using wp7_api_demos.Model;
 
 namespace wp7_api_demos.ViewModel
 {
-    public class NewSessionPageViewModel : INotifyPropertyChanged
+    public class NewSessionPageViewModel : ViewModelBase
     {
-        private INavigationService navigationService;
-
         private int sessionCode;
 
-        private bool isBusy;
-
-        private String busyMessage;
-
         public NewSessionPageViewModel(INavigationService navigationService, int sessionCode)
+            : base(navigationService)
         {
-            this.navigationService = navigationService;
             this.SessionCode = sessionCode;
-        }
-
-        public bool IsBusy
-        {
-            get
-            {
-                return this.isBusy;
-            }
-
-            set
-            {
-                this.isBusy = value;
-                RaisePropertyChanged("IsBusy");
-            }
-        }
-
-        public String BusyMessage
-        {
-            get
-            {
-                return this.busyMessage;
-            }
-
-            set
-            {
-                this.busyMessage = value;
-                RaisePropertyChanged("BusyMessage");
-            }
         }
 
         public int SessionCode
@@ -72,8 +38,6 @@ namespace wp7_api_demos.ViewModel
                 return new DelegateCommand(this.ConnectToSession);
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void ConnectToSession(object arg)
         {
@@ -105,15 +69,6 @@ namespace wp7_api_demos.ViewModel
                     this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
                 }
             });
-        }
-
-        private void RaisePropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }

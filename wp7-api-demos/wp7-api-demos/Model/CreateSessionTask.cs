@@ -63,6 +63,7 @@ namespace wp7_api_demos.Model
             {
                 baseUrlBuilder.Append("?test=false");
             }
+            baseUrlBuilder.Append("&disablecache=" + Guid.NewGuid());
 
             Uri url = new Uri(baseUrlBuilder.ToString());
             request = WebRequest.Create(url);

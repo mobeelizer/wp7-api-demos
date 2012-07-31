@@ -52,6 +52,8 @@
       <HintPath>libs\Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>libs\Newtonsoft.Json.dll</HintPath>
@@ -66,6 +68,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="wp7-sdk">
       <HintPath>libs\wp7-sdk.dll</HintPath>
     </Reference>
@@ -75,6 +78,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\CreateSessionTask.cs" />
+    <Compile Include="Model\DataUtil.cs" />
+    <Compile Include="Model\Movie.cs" />
     <Compile Include="Resources\Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,11 +97,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ResourceDictionary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceDictionary.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\ExplorePageViewModel.cs" />
     <Compile Include="ViewModel\INavigationService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\NewSessionPageViewModel.cs" />
+    <Compile Include="ViewModel\SimpleSyncPageViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\AboutAsPage.xaml.cs">
+      <DependentUpon>AboutAsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConflictsPage.xaml.cs">
+      <DependentUpon>ConflictsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\BusyIndicatorControl.cs" />
     <Compile Include="View\ExplorePage.xaml.cs">
       <DependentUpon>ExplorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FilesPage.xaml.cs">
+      <DependentUpon>FilesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -105,12 +128,63 @@
     <Compile Include="View\NewSessionPage.xaml.cs">
       <DependentUpon>NewSessionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PermisionsPage.xaml.cs">
+      <DependentUpon>PermisionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PushNotificationPage.xaml.cs">
+      <DependentUpon>PushNotificationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RelationConflictsPage.xaml.cs">
+      <DependentUpon>RelationConflictsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SimpleSyncPage.xaml.cs">
+      <DependentUpon>SimpleSyncPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WhatNextPage.xaml.cs">
+      <DependentUpon>WhatNextPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="View\ConflictsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FilesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PermisionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PushNotificationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RelationConflictsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SimpleSyncPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WhatNextPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Resources\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Page Include="View\AboutAsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ExplorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,6 +213,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\application.xml" />
+    <None Include="Resources\movies.txt" />
     <Content Include="Resources\SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +224,10 @@
     <EmbeddedResource Include="Resources\Errors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ResourceDictionary.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceDictionary.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

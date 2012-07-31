@@ -14,7 +14,7 @@ namespace wp7_api_demos
         {
             this.viewModel = new MainPageViewModel(this);
             InitializeComponent();
-            this.LayoutRoot.DataContext = this.viewModel;
+            this.DataContext = this.viewModel;
         }
 
         public void Navigate(System.Uri path)

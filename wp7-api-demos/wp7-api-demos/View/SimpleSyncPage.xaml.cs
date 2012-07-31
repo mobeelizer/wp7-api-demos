@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using wp7_api_demos.ViewModel;
 
 namespace wp7_api_demos.View
 {
-    public partial class NewSessionPage : PhoneApplicationPage, INavigationService
+    public partial class SimpleSyncPage : PhoneApplicationPage, INavigationService
     {
-        private NewSessionPageViewModel viewModel;
+        private SimpleSyncPageViewModel viewModel;
 
-        public NewSessionPage()
+        public SimpleSyncPage()
         {
             InitializeComponent();
         }
@@ -19,7 +28,7 @@ namespace wp7_api_demos.View
             if (this.NavigationContext.QueryString.ContainsKey("SessionCode"))
             {
                 String sessioCode = this.NavigationContext.QueryString["SessionCode"];
-                this.viewModel = new NewSessionPageViewModel(this, Int32.Parse(sessioCode));
+                this.viewModel = new SimpleSyncPageViewModel(this, Int32.Parse(sessioCode));
                 this.DataContext = this.viewModel;
             }
 
@@ -41,6 +50,7 @@ namespace wp7_api_demos.View
                 this.NavigationService.GoBack();
             }));
         }
+
 
         public void ShowMessage(string title, string message)
         {

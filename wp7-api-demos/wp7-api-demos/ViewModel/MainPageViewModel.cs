@@ -5,47 +5,25 @@ using System.ComponentModel;
 using Com.Mobeelizer.Mobile.Wp7;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using System.Windows;
+using System.IO.IsolatedStorage;
 
 namespace wp7_api_demos.ViewModel
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageViewModel : ViewModelBase
     {
-        private INavigationService navigationService;
+        private const String SESSION_KEY = "CurrentSession";
 
-        private bool isBusy;
-
-        private String busyMessage;
-
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            this.navigationService = navigationService;
-        }
-
-        public bool IsBusy
-        {
-            get
+            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+            if (settings.Contains(SESSION_KEY))
             {
-                return this.isBusy;
-            }
-
-            set
-            {
-                this.isBusy = value;
-                RaisePropertyChanged("IsBusy");
-            }
-        }
-
-        public String BusyMessage
-        {
-            get
-            {
-                return this.busyMessage;
-            }
-
-            set
-            {
-                this.busyMessage = value;
-                RaisePropertyChanged("BusyMessage");
+                int? sessionCode = (int?)settings[SESSION_KEY];
+                if (sessionCode != null)
+                {
+                    this.SessionCode = sessionCode.Value;
+                    this.ConnectToSessionCommand.Execute(null);
+                }
             }
         }
 
@@ -82,6 +60,17 @@ namespace wp7_api_demos.ViewModel
                     else
                     {
                         this.SessionCode = Int32.Parse(sessionCode);
+                        IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+                        if (settings.Contains(SESSION_KEY))
+                        {
+                            settings.Add(SESSION_KEY, this.SessionCode);
+                        }
+                        else
+                        {
+                            settings[SESSION_KEY] = this.SessionCode;
+                        }
+
+                        settings.Save();
                         this.navigationService.Navigate(new Uri(String.Format("/View/NewSessionPage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
                     }
                 });
@@ -101,8 +90,8 @@ namespace wp7_api_demos.ViewModel
                         switch (status)
                         {
                             case MobeelizerLoginStatus.OK:
-                                navigationService.Navigate(new Uri("TODO Explorer page"));
-                                break;
+                               navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
+                             break;
                             case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
                                 this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
                                 break;
@@ -118,17 +107,6 @@ namespace wp7_api_demos.ViewModel
                         this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
                     }
                 });
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }
