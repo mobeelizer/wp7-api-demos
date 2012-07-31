@@ -61,6 +61,24 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://cloud.mobeelizer.com/sync.
+        /// </summary>
+        internal static string c_apiURL_host {
+            get {
+                return ResourceManager.GetString("c_apiURL_host", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /demos/create.
+        /// </summary>
+        internal static string c_apiURL_path {
+            get {
+                return ResourceManager.GetString("c_apiURL_path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A.
         /// </summary>
         internal static string c_userALogin {

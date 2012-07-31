@@ -5,7 +5,7 @@ using System.Text;
 
 namespace wp7_api_demos.ViewModel
 {
-    interface INavigationService
+    public interface INavigationService
     {
         void Navigate(Uri path);
 

@@ -138,4 +138,7 @@
   <data name="e_syncFailed" xml:space="preserve">
     <value>Cannot perform synchronization. Please try again later.</value>
   </data>
+  <data name="e_title" xml:space="preserve">
+    <value>Error</value>
+  </data>
 </root>

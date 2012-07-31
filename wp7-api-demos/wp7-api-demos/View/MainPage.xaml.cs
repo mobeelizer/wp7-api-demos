@@ -12,19 +12,25 @@ namespace wp7_api_demos
 
         public MainPage()
         {
-            viewModel = new MainPageViewModel(this);
+            this.viewModel = new MainPageViewModel(this);
             InitializeComponent();
-            this.DataContext = viewModel;
+            this.LayoutRoot.DataContext = this.viewModel;
         }
 
         public void Navigate(System.Uri path)
         {
-            this.NavigationService.Navigate(path);
+            this.Dispatcher.BeginInvoke(new System.Action(() =>
+            {
+                this.NavigationService.Navigate(path);
+            }));
         }
 
         public void GoBack()
         {
-            this.NavigationService.GoBack();
+            this.Dispatcher.BeginInvoke(new System.Action(() =>
+            {
+                this.NavigationService.GoBack();
+            }));
         }
 
 

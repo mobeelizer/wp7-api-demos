@@ -122,5 +122,14 @@ namespace wp7_api_demos.Resources {
                 return ResourceManager.GetString("e_syncFailed", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string e_title {
+            get {
+                return ResourceManager.GetString("e_title", resourceCulture);
+            }
+        }
     }
 }
