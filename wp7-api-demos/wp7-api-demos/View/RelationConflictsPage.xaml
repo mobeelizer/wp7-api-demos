@@ -6,40 +6,105 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls.Converters;assembly=Coding4Fun.Phone.Controls"
+    xmlns:localControls="clr-namespace:wp7_api_demos.View.Controls"
+    xmlns:convertrs="clr-namespace:wp7_api_demos.ViewModel.Converters"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
+    <UserControl.Resources>
+        <coding4Fun:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
+        <Grid x:Name="LayoutRoot" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+            <!--TitlePanel contains the name of the application and page title-->
+            <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+                <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBlock x:Name="PageTitle" Text="graph's conflicts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                <Grid Margin="0,20,0,0" Visibility="{Binding IsWarningVisable, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="Warning!" FontWeight="Bold" Style="{StaticResource PhoneTextAccentStyle}" />
+                    <TextBlock Margin="10,24,0,0" Text="{Binding Path=LocalizedResources.footerWarning, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                </Grid>
+            </StackPanel>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0"></Grid>
-    </Grid>
- 
+            <!--ContentPanel - place additional content here-->
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition MaxHeight="115"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Entities}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate >
+                            <Grid>
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu>
+                                        <toolkit:MenuItem Header="Add item" CommandParameter="{Binding}" Command="{Binding AddCommand}"/>
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding name}" FontSize="26"/>
+                                    <ListBox Grid.Row="1" ItemsSource="{Binding Items}" Margin="10,0,0,0" >
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <toolkit:ContextMenuService.ContextMenu>
+                                                        <toolkit:ContextMenu>
+                                                            <toolkit:MenuItem Header="Delete item" CommandParameter="{Binding}" Command="{Binding RemoveCommand}"/>
+                                                        </toolkit:ContextMenu>
+                                                    </toolkit:ContextMenuService.ContextMenu>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="30"/>
+                                                        <ColumnDefinition Width="30"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding title}"/>
+                                                    <Rectangle Grid.Column="1" Height="30" Width="30" Fill="Red" Visibility="{Binding Conflicted, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                    <TextBlock Grid.Column="2" Text="{Binding Owner}" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <!--<TextBlock Text="{Binding score}" Grid.Row="1"/>-->
+                                </Grid>
+                                <TextBlock Grid.Column="1" Text="{Binding status}" />
+                                <Rectangle Grid.Column="2" Height="30" Width="30" Fill="Red" Visibility="{Binding Conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="3" Text="{Binding Owner}" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+    </localControls:BusyIndicatorControl>
     <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
+    <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
+            <shell:ApplicationBarIconButton IconUri="/Resources/icons/appbar.add.rest.png" Text="add" Click="OnAddClicked"/>
+            <shell:ApplicationBarIconButton IconUri="/Resources/icons/appbar.sync.rest.png" Text="sync" Click="OnSyncClicked"/>
+            <shell:ApplicationBarIconButton IconUri="/Resources/icons/appbar.info.rest.png" Text="info" Click="OnInfoClicked"/>
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
-
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

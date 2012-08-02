@@ -15,5 +15,21 @@ namespace wp7_api_demos.Model.MobeelizerModels
 
         [Column()]
         public String title { get; set; }
+
+        public String Owner
+        {
+            get
+            {
+                return base.owner;
+            }
+        }
+
+        public bool Conflicted
+        {
+            get
+            {
+                return base.conflicted;
+            }
+        }
     }
 }

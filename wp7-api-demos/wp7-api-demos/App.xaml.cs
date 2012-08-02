@@ -13,11 +13,14 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Com.Mobeelizer.Mobile.Wp7;
+using wp7_api_demos.Model;
 
 namespace wp7_api_demos
 {
     public partial class App : Application
     {
+        public static User CurrentUser { get; set; }
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>

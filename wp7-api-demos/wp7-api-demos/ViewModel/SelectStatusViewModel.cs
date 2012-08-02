@@ -1,18 +1,27 @@
 ﻿using System;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Ink;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Com.Mobeelizer.Mobile.Wp7;
 using wp7_api_demos.Model.MobeelizerModels;
+using System.Linq;
 
 namespace wp7_api_demos.ViewModel
 {
-    public class SelectScorePageViewModel : ViewModelBase
+    public class SelectStatusViewModel : ViewModelBase
     {
-        private String modelGuid;
+            private String modelGuid;
 
         public ObservableCollection<int> Options { get; private set; }
 
-        public SelectScorePageViewModel(INavigationService navigationService, String modelGuid)
+        public SelectStatusViewModel(INavigationService navigationService, String modelGuid)
             : base(navigationService)
         {
             this.modelGuid = modelGuid;
@@ -34,9 +43,9 @@ namespace wp7_api_demos.ViewModel
             {
                 using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
                 {
-                    var query = from conflictsEntity e in transaction.GetModels<conflictsEntity>() where e.guid == modelGuid select e;
-                    conflictsEntity entity = query.Single();
-                    entity.score = value;
+                    var query = from graphsConflictsOrderEntity e in transaction.GetModels<graphsConflictsOrderEntity>() where e.guid == modelGuid select e;
+                    graphsConflictsOrderEntity entity = query.Single();
+                    entity.status = value;
                     transaction.Commit();
                 }
                 this.navigationService.GoBack();

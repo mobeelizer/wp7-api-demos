@@ -43,6 +43,7 @@ namespace wp7_api_demos.ViewModel
         {
             this.BusyMessage = "Logging in...";
             this.IsBusy = true;
+            App.CurrentUser = User.A;
             Mobeelizer.Login(SessionCode.ToString(), Resources.Config.c_userALogin, Resources.Config.c_userAPassword, (result) =>
             {
                 this.IsBusy = false;

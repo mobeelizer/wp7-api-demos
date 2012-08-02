@@ -22,7 +22,7 @@ namespace wp7_api_demos.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ResourceDictionary {
+    public class ResourceDictionary {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace wp7_api_demos.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("wp7_api_demos.Resources.ResourceDictionary", typeof(ResourceDictionary).Assembly);
@@ -51,7 +51,7 @@ namespace wp7_api_demos.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,270 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Two users modify one record at the same time? You can easily cope with that!.
+        /// </summary>
+        public static string dialogConflictsSyncText1 {
+            get {
+                return ResourceManager.GetString("dialogConflictsSyncText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose one movie title that all users have. Now change movie rating and synchronize updated data….
+        /// </summary>
+        public static string dialogConflictsSyncText2 {
+            get {
+                return ResourceManager.GetString("dialogConflictsSyncText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify the same record with another user and then synchronize….
+        /// </summary>
+        public static string dialogConflictsSyncText3 {
+            get {
+                return ResourceManager.GetString("dialogConflictsSyncText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to And… don&apos;t worry anymore. No data is lost! Your record is in conflict state, but it&apos;s easy to resolve it - although not in this demo….
+        /// </summary>
+        public static string dialogConflictsSyncText4 {
+            get {
+                return ResourceManager.GetString("dialogConflictsSyncText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning, conflicts arise….
+        /// </summary>
+        public static string dialogConflictsSyncTitle {
+            get {
+                return ResourceManager.GetString("dialogConflictsSyncTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new images   .
+        /// </summary>
+        public static string dialogFilesSyncAddText {
+            get {
+                return ResourceManager.GetString("dialogFilesSyncAddText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find out how easy data exchange can be!.
+        /// </summary>
+        public static string dialogFilesSyncText1 {
+            get {
+                return ResourceManager.GetString("dialogFilesSyncText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Also simple way to share binaries….
+        /// </summary>
+        public static string dialogFilesSyncTitle {
+            get {
+                return ResourceManager.GetString("dialogFilesSyncTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new elements.
+        /// </summary>
+        public static string dialogInfoAddText {
+            get {
+                return ResourceManager.GetString("dialogInfoAddText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now switch user or connect another device.
+        /// </summary>
+        public static string dialogInfoChengeUserText {
+            get {
+                return ResourceManager.GetString("dialogInfoChengeUserText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronize added elements with the cloud.
+        /// </summary>
+        public static string dialogInfoSyncText1 {
+            get {
+                return ResourceManager.GetString("dialogInfoSyncText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sync to see new elements.
+        /// </summary>
+        public static string dialogInfoSyncText2 {
+            get {
+                return ResourceManager.GetString("dialogInfoSyncText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add, sync, switch user, sync….
+        /// </summary>
+        public static string dialogInfoSyncText3 {
+            get {
+                return ResourceManager.GetString("dialogInfoSyncText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to But do not sync data yet!.
+        /// </summary>
+        public static string dialogInfoSyncText4 {
+            get {
+                return ResourceManager.GetString("dialogInfoSyncText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In your app you can easily define who will see what..
+        /// </summary>
+        public static string dialogPermissionsSyncText1 {
+            get {
+                return ResourceManager.GetString("dialogPermissionsSyncText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See difference? That&apos;s right! Some data are accesible only to creator, some to everyone. But you can do so much more….
+        /// </summary>
+        public static string dialogPermissionsSyncText2 {
+            get {
+                return ResourceManager.GetString("dialogPermissionsSyncText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protect your shared data….
+        /// </summary>
+        public static string dialogPermissionsSyncTitle {
+            get {
+                return ResourceManager.GetString("dialogPermissionsSyncTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can simply send push notifications without thinking about operating systems and devices..
+        /// </summary>
+        public static string dialogPushNotificationsText1 {
+            get {
+                return ResourceManager.GetString("dialogPushNotificationsText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Also you can specify receiver of your notification. He will get it - on every device he&apos;s logged in (even if application is turned off)..
+        /// </summary>
+        public static string dialogPushNotificationsText2 {
+            get {
+                return ResourceManager.GetString("dialogPushNotificationsText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notify users with minimum effort….
+        /// </summary>
+        public static string dialogPushNotificationsTitle {
+            get {
+                return ResourceManager.GetString("dialogPushNotificationsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See how users can interfere with each other working on common Orders..
+        /// </summary>
+        public static string dialogRelationConflictsSyncText1 {
+            get {
+                return ResourceManager.GetString("dialogRelationConflictsSyncText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As in previous example - choose one order and change it&apos;s status, synchronize data….
+        /// </summary>
+        public static string dialogRelationConflictsSyncText2 {
+            get {
+                return ResourceManager.GetString("dialogRelationConflictsSyncText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now using another user add or remove position in previously choosen order. Synchronize data..
+        /// </summary>
+        public static string dialogRelationConflictsSyncText3 {
+            get {
+                return ResourceManager.GetString("dialogRelationConflictsSyncText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t be afraid. Your orders are secure. Conflicts can also occour in more complicated structures - like orders and positions. Of course you can feel safe, we will handle them for you….
+        /// </summary>
+        public static string dialogRelationConflictsSyncText4 {
+            get {
+                return ResourceManager.GetString("dialogRelationConflictsSyncText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relations, conflicts - no problem at all….
+        /// </summary>
+        public static string dialogRelationConflictsSyncTitle {
+            get {
+                return ResourceManager.GetString("dialogRelationConflictsSyncTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange simple data between users..
+        /// </summary>
+        public static string dialogSimpleSyncText1 {
+            get {
+                return ResourceManager.GetString("dialogSimpleSyncText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now it&apos;s your turn! Try to add more records and exchange them between as many devices and users as you can find….
+        /// </summary>
+        public static string dialogSimpleSyncText2 {
+            get {
+                return ResourceManager.GetString("dialogSimpleSyncText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Simple way to share data….
+        /// </summary>
+        public static string dialogSimpleSyncTitle {
+            get {
+                return ResourceManager.GetString("dialogSimpleSyncTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items marked with     were not synchronized, because other user edited them at the same time..
+        /// </summary>
+        public static string footerWarning {
+            get {
+                return ResourceManager.GetString("footerWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About Us.
         /// </summary>
-        internal static string m_about {
+        public static string m_about {
             get {
                 return ResourceManager.GetString("m_about", resourceCulture);
             }
@@ -72,7 +333,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Conflicts.
         /// </summary>
-        internal static string m_conflicts {
+        public static string m_conflicts {
             get {
                 return ResourceManager.GetString("m_conflicts", resourceCulture);
             }
@@ -81,7 +342,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
-        internal static string m_files {
+        public static string m_files {
             get {
                 return ResourceManager.GetString("m_files", resourceCulture);
             }
@@ -90,7 +351,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Permissions.
         /// </summary>
-        internal static string m_permisions {
+        public static string m_permisions {
             get {
                 return ResourceManager.GetString("m_permisions", resourceCulture);
             }
@@ -99,7 +360,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Push Notifications.
         /// </summary>
-        internal static string m_push {
+        public static string m_push {
             get {
                 return ResourceManager.GetString("m_push", resourceCulture);
             }
@@ -108,7 +369,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Relation Conflicts.
         /// </summary>
-        internal static string m_relations {
+        public static string m_relations {
             get {
                 return ResourceManager.GetString("m_relations", resourceCulture);
             }
@@ -117,7 +378,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Simple Sync.
         /// </summary>
-        internal static string m_sync {
+        public static string m_sync {
             get {
                 return ResourceManager.GetString("m_sync", resourceCulture);
             }
@@ -126,7 +387,7 @@ namespace wp7_api_demos.Resources {
         /// <summary>
         ///   Looks up a localized string similar to What to do next?.
         /// </summary>
-        internal static string m_whatNext {
+        public static string m_whatNext {
             get {
                 return ResourceManager.GetString("m_whatNext", resourceCulture);
             }
@@ -134,10 +395,20 @@ namespace wp7_api_demos.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;movies&gt;
-        ///	&lt;movie director=&quot;&quot; title&quot;&quot;/&gt;
-        ///&lt;/movies&gt;.
+        ///    &lt;movieTitles&gt;
+        ///        &lt;item&gt;The Shawshank Redemption&lt;/item&gt;
+        ///        &lt;item&gt;The Godfather&lt;/item&gt;
+        ///        &lt;item&gt;The Godfather: Part II&lt;/item&gt;
+        ///        &lt;item&gt;Pulp Fiction&lt;/item&gt;
+        ///        &lt;item&gt;Il buono, il brutto, il cattivo.&lt;/item&gt;
+        ///        &lt;item&gt;12 Angry Men&lt;/item&gt;
+        ///        &lt;item&gt;Schindler’s List&lt;/item&gt;
+        ///        &lt;item&gt;The Dark Knight&lt;/item&gt;
+        ///        &lt;item&gt;The Lord of the Rings: The Return of the King&lt;/item&gt;
+        ///        &lt;item&gt;One Flew Over the Cuckoo’s Nest&lt;/item&gt;
+        ///        &lt;item&gt;Star Wars: Episod [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string movies {
+        public static string movies {
             get {
                 return ResourceManager.GetString("movies", resourceCulture);
             }

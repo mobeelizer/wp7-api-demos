@@ -7,16 +7,14 @@ using wp7_api_demos.Model;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using Com.Mobeelizer.Mobile.Wp7;
 using System.Linq;
-using System.Collections.Generic;
-
 
 namespace wp7_api_demos.ViewModel
 {
-    public class ConflictsPageViewModel : ViewModelBase
+    public class RelationConflictsPageViewModel : ViewModelBase
     {
-        private ObservableCollection<conflictsEntity> entities;
+        private ObservableCollection<graphsConflictsOrderEntity> entities;
 
-        public ObservableCollection<conflictsEntity> Entities
+        public ObservableCollection<graphsConflictsOrderEntity> Entities
         {
             get
             {
@@ -30,17 +28,17 @@ namespace wp7_api_demos.ViewModel
             }
         }
 
-        public ConflictsPageViewModel(INavigationService navigationService, int sessionCode)
+        public RelationConflictsPageViewModel(INavigationService navigationService, int sessionCode)
             : base(navigationService)
         {
-            this.Entities = new ObservableCollection<conflictsEntity>();
+            this.Entities = new ObservableCollection<graphsConflictsOrderEntity>();
             this.RefreshEntitiesList();
             this.SessionCode = sessionCode;
         }
 
-        private conflictsEntity selectedEntity;
+        private graphsConflictsOrderEntity selectedEntity;
 
-        public conflictsEntity SelectedEntity
+        public graphsConflictsOrderEntity SelectedEntity
         {
             get
             {
@@ -54,7 +52,7 @@ namespace wp7_api_demos.ViewModel
                     if (value != null)
                     {
                         this.selectedEntity = value;
-                        this.navigationService.Navigate(new Uri(String.Format("/View/SelectScorePage.xaml?guid={0}", this.selectedEntity.guid), UriKind.Relative));
+                        this.navigationService.Navigate(new Uri(String.Format("/View/SelectStatusPage.xaml?guid={0}", this.selectedEntity.guid), UriKind.Relative));
                     }
                 }
             }
@@ -83,6 +81,36 @@ namespace wp7_api_demos.ViewModel
             get
             {
                 return new DelegateCommand(this.OnAdd);
+            }
+        }
+
+        private ICommand addItemCommand;
+
+        public ICommand AddItemCommand
+        {
+            get
+            {
+                if (this.addItemCommand == null)
+                {
+                    this.addItemCommand = new DelegateCommand(this.OnAddRelation);
+                }
+
+                return this.addItemCommand;
+            }
+        }
+
+        private ICommand removeItemCommand;
+
+        public ICommand RemoveItemCommand
+        {
+            get
+            {
+                if (this.removeItemCommand == null)
+                {
+                    this.removeItemCommand = new DelegateCommand(this.OnRemoveRelation);
+                }
+
+                return this.removeItemCommand;
             }
         }
 
@@ -142,17 +170,57 @@ namespace wp7_api_demos.ViewModel
 
         private void OnAdd(object param)
         {
-            Movie movie = DataUtil.GetRandomMovie();
-            conflictsEntity entity = new conflictsEntity();
-            entity.title = movie.Title;
-            entity.score = movie.Rating;
+            graphsConflictsOrderEntity entity = new graphsConflictsOrderEntity();
+            entity.name = this.GetName();
+            entity.status = new Random().Next(1, 5);
+            entity.AddCommand = AddItemCommand;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                transaction.GetModels<conflictsEntity>().InsertOnSubmit(entity);
+                transaction.GetModels<graphsConflictsOrderEntity>().InsertOnSubmit(entity);
                 transaction.Commit();
             }
 
             this.Entities.Add(entity);
+        }
+
+        private string GetName()
+        {
+            String user = App.CurrentUser.ToString();
+            int number = new Random().Next(0, 99);
+            return String.Format("Order {0}/00{1}", user, number);
+        }
+
+        private void OnAddRelation(object param)
+        {
+            graphsConflictsOrderEntity order = param as graphsConflictsOrderEntity;
+            Movie movie = DataUtil.GetRandomMovie();
+            graphsConflictsItemEntity entity = new graphsConflictsItemEntity();
+            entity.title = movie.Title;
+            entity.orderGuid = order.guid;
+            entity.RemoveCommand = RemoveItemCommand;
+            using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+            {
+                transaction.GetModels<graphsConflictsItemEntity>().InsertOnSubmit(entity);
+                transaction.Commit();
+            }
+            if (order.Items == null)
+            {
+                order.Items = new ObservableCollection<graphsConflictsItemEntity>();
+            }
+
+            order.Items.Add(entity);
+        }
+
+        private void OnRemoveRelation(object param)
+        {
+            graphsConflictsItemEntity item = param as graphsConflictsItemEntity;
+            using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+            {
+                transaction.GetModels<graphsConflictsItemEntity>().DeleteOnSubmit(item);
+                transaction.Commit();
+            }
+
+            RefreshEntitiesList();
         }
 
         private void OnSync(object param)
@@ -183,22 +251,35 @@ namespace wp7_api_demos.ViewModel
         private void RefreshEntitiesList()
         {
             bool inConflict = false;
-            ObservableCollection<conflictsEntity> entities = new ObservableCollection<conflictsEntity>();
+            ObservableCollection<graphsConflictsOrderEntity> entities = new ObservableCollection<graphsConflictsOrderEntity>();
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
-                var query = from conflictsEntity entity in transaction.GetModels<conflictsEntity>() select entity;
+                var query = from graphsConflictsOrderEntity entity in transaction.GetModels<graphsConflictsOrderEntity>() select entity;
                 foreach (var entity in query)
                 {
+                    entity.Items = new ObservableCollection<graphsConflictsItemEntity>();
+                    var relationQuery = from graphsConflictsItemEntity r in transaction.GetModels<graphsConflictsItemEntity>() where r.orderGuid == entity.guid select r;
+                    foreach (var relation in relationQuery)
+                    {
+                        if (relation.Conflicted)
+                        {
+                            inConflict = true;
+                        }
+                        relation.RemoveCommand = RemoveItemCommand;
+                        entity.Items.Add(relation);
+                    }
+
                     if (entity.Conflicted)
                     {
                         inConflict = true;
                     }
 
+                    entity.AddCommand = AddItemCommand;
                     entities.Add(entity);
                 }
             }
-            
+
             if (IsWarningVisable != inConflict)
             {
                 IsWarningVisable = inConflict;

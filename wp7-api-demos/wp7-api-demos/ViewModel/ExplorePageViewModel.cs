@@ -40,5 +40,32 @@ namespace wp7_api_demos.ViewModel
         }
 
         public IDictionary<String, ICommand> MenuItems { get; private set; }
+
+        public ICommand UserSwitchedCommand
+        {
+            get
+            {
+                return new DelegateCommand(UserSwitched);
+            }
+        }
+
+        public ICommand SwitchingUserCommand
+        {
+            get
+            {
+                return new DelegateCommand(SwitchingUser);
+            }
+        }
+
+        private void UserSwitched(object arg)
+        {
+            this.IsBusy = false;
+        }
+
+        private void SwitchingUser(object arg)
+        {
+            this.BusyMessage = "Logging in";
+            this.IsBusy = true;
+        }
     }
 }

@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="wp7_api_demos.View.Controls.info.RelationConflictsInfoMessage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+<Grid x:Name="LayoutRoot">
+        <StackPanel>
+            <TextBlock Text="{Binding Path=LocalizedResources.dialogRelationConflictsSyncText1, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Margin="10"/>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text=">" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=LocalizedResources.dialogInfoSyncText3,Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+            </Grid>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text=">" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=LocalizedResources.dialogRelationConflictsSyncText2,Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+            </Grid>
+            <TextBlock Text="{Binding Path=LocalizedResources.dialogInfoChengeUserText, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Margin="10"/>
+            <Grid Height="40" HorizontalAlignment="Center"></Grid>
+            <TextBlock Text="{Binding Path=LocalizedResources.dialogInfoSyncText4, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" HorizontalAlignment="Center" FontWeight="Bold" />
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text=">" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=LocalizedResources.dialogRelationConflictsSyncText3,Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+            </Grid>
+            <TextBlock Text="{Binding Path=LocalizedResources.dialogRelationConflictsSyncText4, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Margin="10"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

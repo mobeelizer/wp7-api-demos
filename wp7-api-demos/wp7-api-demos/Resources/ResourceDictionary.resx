@@ -145,4 +145,91 @@
   <data name="m_whatNext" xml:space="preserve">
     <value>What to do next?</value>
   </data>
+  <data name="dialogInfoAddText" xml:space="preserve">
+    <value>Add new elements</value>
+  </data>
+  <data name="dialogInfoChengeUserText" xml:space="preserve">
+    <value>Now switch user or connect another device</value>
+  </data>
+  <data name="dialogInfoSyncText1" xml:space="preserve">
+    <value>Synchronize added elements with the cloud</value>
+  </data>
+  <data name="dialogInfoSyncText2" xml:space="preserve">
+    <value>Sync to see new elements</value>
+  </data>
+  <data name="dialogInfoSyncText3" xml:space="preserve">
+    <value>Add, sync, switch user, sync…</value>
+  </data>
+  <data name="dialogInfoSyncText4" xml:space="preserve">
+    <value>But do not sync data yet!</value>
+  </data>
+  <data name="dialogSimpleSyncText1" xml:space="preserve">
+    <value>Exchange simple data between users.</value>
+  </data>
+  <data name="dialogSimpleSyncText2" xml:space="preserve">
+    <value>Now it's your turn! Try to add more records and exchange them between as many devices and users as you can find…</value>
+  </data>
+  <data name="dialogSimpleSyncTitle" xml:space="preserve">
+    <value>Simple way to share data…</value>
+  </data>
+  <data name="dialogConflictsSyncText1" xml:space="preserve">
+    <value>Two users modify one record at the same time? You can easily cope with that!</value>
+  </data>
+  <data name="dialogConflictsSyncText2" xml:space="preserve">
+    <value>Choose one movie title that all users have. Now change movie rating and synchronize updated data…</value>
+  </data>
+  <data name="dialogConflictsSyncText3" xml:space="preserve">
+    <value>Modify the same record with another user and then synchronize…</value>
+  </data>
+  <data name="dialogConflictsSyncText4" xml:space="preserve">
+    <value>And… don't worry anymore. No data is lost! Your record is in conflict state, but it's easy to resolve it - although not in this demo…</value>
+  </data>
+  <data name="dialogConflictsSyncTitle" xml:space="preserve">
+    <value>Warning, conflicts arise…</value>
+  </data>
+  <data name="dialogFilesSyncAddText" xml:space="preserve">
+    <value>Add new images   </value>
+  </data>
+  <data name="dialogFilesSyncText1" xml:space="preserve">
+    <value>Find out how easy data exchange can be!</value>
+  </data>
+  <data name="dialogFilesSyncTitle" xml:space="preserve">
+    <value>Also simple way to share binaries…</value>
+  </data>
+  <data name="dialogPermissionsSyncText1" xml:space="preserve">
+    <value>In your app you can easily define who will see what.</value>
+  </data>
+  <data name="dialogPermissionsSyncText2" xml:space="preserve">
+    <value>See difference? That's right! Some data are accesible only to creator, some to everyone. But you can do so much more…</value>
+  </data>
+  <data name="dialogPermissionsSyncTitle" xml:space="preserve">
+    <value>Protect your shared data…</value>
+  </data>
+  <data name="dialogPushNotificationsText1" xml:space="preserve">
+    <value>You can simply send push notifications without thinking about operating systems and devices.</value>
+  </data>
+  <data name="dialogPushNotificationsText2" xml:space="preserve">
+    <value>Also you can specify receiver of your notification. He will get it - on every device he's logged in (even if application is turned off).</value>
+  </data>
+  <data name="dialogPushNotificationsTitle" xml:space="preserve">
+    <value>Notify users with minimum effort…</value>
+  </data>
+  <data name="dialogRelationConflictsSyncText1" xml:space="preserve">
+    <value>See how users can interfere with each other working on common Orders.</value>
+  </data>
+  <data name="dialogRelationConflictsSyncText2" xml:space="preserve">
+    <value>As in previous example - choose one order and change it's status, synchronize data…</value>
+  </data>
+  <data name="dialogRelationConflictsSyncText3" xml:space="preserve">
+    <value>Now using another user add or remove position in previously choosen order. Synchronize data.</value>
+  </data>
+  <data name="dialogRelationConflictsSyncText4" xml:space="preserve">
+    <value>Don't be afraid. Your orders are secure. Conflicts can also occour in more complicated structures - like orders and positions. Of course you can feel safe, we will handle them for you…</value>
+  </data>
+  <data name="dialogRelationConflictsSyncTitle" xml:space="preserve">
+    <value>Relations, conflicts - no problem at all…</value>
+  </data>
+  <data name="footerWarning" xml:space="preserve">
+    <value>Items marked with     were not synchronized, because other user edited them at the same time.</value>
+  </data>
 </root>
