@@ -68,6 +68,7 @@ namespace wp7_api_demos
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             Mobeelizer.OnLaunching();
+            PushNotificationService.Instance.RegisterForRemoteNotification();
         }
 
         // Code to execute when the application is activated (brought to foreground)

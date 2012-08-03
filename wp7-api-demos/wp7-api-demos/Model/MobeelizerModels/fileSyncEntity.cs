@@ -25,5 +25,13 @@ namespace wp7_api_demos.Model.MobeelizerModels
                 this.photo = base.SetFile(value);
             }
         }
+
+        public String Owner
+        {
+            get
+            {
+                return base.owner;
+            }
+        }
     }
 }

@@ -81,6 +81,8 @@ namespace wp7_api_demos.ViewModel
                         switch (status)
                         {
                             case MobeelizerLoginStatus.OK:
+                                App.CurrentUser = User.A;
+                                PushNotificationService.Instance.PerformUserRegistration();
                                 this.SaveSessionCode(this.SessionCode);
                                navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
                              break;

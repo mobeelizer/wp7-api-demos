@@ -105,6 +105,10 @@
             <shell:ApplicationBarIconButton IconUri="/Resources/icons/appbar.add.rest.png" Text="add" Click="OnAddClicked"/>
             <shell:ApplicationBarIconButton IconUri="/Resources/icons/appbar.sync.rest.png" Text="sync" Click="OnSyncClicked"/>
             <shell:ApplicationBarIconButton IconUri="/Resources/icons/appbar.info.rest.png" Text="info" Click="OnInfoClicked"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="logout" Click="OnLogout"/>
+                <shell:ApplicationBarMenuItem Text="next example" Click="OnNext"/>
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

@@ -85,5 +85,15 @@ namespace wp7_api_demos.View
             messagePrompt.Body = new PermissionsInfoMessage();
             messagePrompt.Show();
         }
+
+
+        private void OnLogout(object sender, EventArgs e)
+        {
+        }
+
+        private void OnNext(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri(String.Format("/View/ConflictsPage.xaml?SessionCode={0}", viewModel.SessionCode), UriKind.Relative));
+        }
     }
 }

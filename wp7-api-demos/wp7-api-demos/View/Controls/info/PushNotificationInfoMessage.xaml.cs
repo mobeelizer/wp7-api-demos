@@ -9,20 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
 
-namespace wp7_api_demos.View
+namespace wp7_api_demos.View.Controls.info
 {
-    public partial class WhatNextPage : PhoneApplicationPage
+    public partial class PushNotificationInfoMessage : UserControl
     {
-        public WhatNextPage()
+        public PushNotificationInfoMessage()
         {
             InitializeComponent();
         }
-
-        private void OnLogout(object sender, EventArgs e)
-        {
-        }
-
     }
 }

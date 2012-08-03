@@ -15,7 +15,7 @@ namespace wp7_api_demos.ViewModel
             this.SessionCode = sessionCode;
             this.MenuItems = new Dictionary<String, ICommand>();
             String sessionParam = String.Format("?SessionCode={0}", sessionCode);
-            this.MenuItems.Add(Resources.ResourceDictionary.m_about, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/AboutAsPage.xaml", UriKind.Relative)); }));
+            this.MenuItems.Add(Resources.ResourceDictionary.m_about, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/AboutAsPage.xaml" + sessionParam, UriKind.Relative)); }));
             this.MenuItems.Add(Resources.ResourceDictionary.m_sync, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/SimpleSyncPage.xaml" + sessionParam, UriKind.Relative)); }));
             this.MenuItems.Add(Resources.ResourceDictionary.m_files, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/FilesPage.xaml" + sessionParam, UriKind.Relative)); }));
             this.MenuItems.Add(Resources.ResourceDictionary.m_permisions, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/PermisionsPage.xaml" + sessionParam, UriKind.Relative)); }));

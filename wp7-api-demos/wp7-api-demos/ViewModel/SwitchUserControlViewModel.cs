@@ -46,6 +46,7 @@ namespace wp7_api_demos.ViewModel
                             if (result.GetLoginStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.OK)
                             {
                                 App.CurrentUser = value;
+                                PushNotificationService.Instance.PerformUserRegistration();
                                 Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
                                 {
                                     this.RaisePropertyChanged("CurrentUser");
