@@ -147,5 +147,6 @@ namespace wp7_api_demos
         }
 
         #endregion
+
     }
 }

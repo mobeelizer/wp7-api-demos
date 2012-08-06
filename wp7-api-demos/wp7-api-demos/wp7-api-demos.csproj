@@ -90,6 +90,7 @@
     <Compile Include="Model\DataUtil.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\PushNotificationService.cs" />
+    <Compile Include="Model\SessionSettings.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Resources\Config.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -114,6 +115,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceDictionary.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AboutPageViewModel.cs" />
     <Compile Include="ViewModel\ConflictsPageViewModel.cs" />
     <Compile Include="ViewModel\Converters\EmptyFieldConverter.cs" />
     <Compile Include="ViewModel\Converters\MobeelizerFileToBitmapImageConverter.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="ViewModel\INavigationService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\NewSessionPageViewModel.cs" />
+    <Compile Include="ViewModel\PageSettings.cs" />
     <Compile Include="ViewModel\PermisionsPageViewModel.cs" />
     <Compile Include="ViewModel\PushNotificationPageViewModel.cs" />
     <Compile Include="ViewModel\RelationConflictsPageViewModel.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="ViewModel\SimpleSyncPageViewModel.cs" />
     <Compile Include="ViewModel\SwitchUserControlViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\WhatNextPageViewModel.cs" />
     <Compile Include="View\AboutAsPage.xaml.cs">
       <DependentUpon>AboutAsPage.xaml</DependentUpon>
     </Compile>

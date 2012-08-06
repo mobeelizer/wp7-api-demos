@@ -3,6 +3,7 @@ using Com.Mobeelizer.Mobile.Wp7;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using wp7_api_demos.ViewModel;
 using System.Windows;
+using System;
 
 namespace wp7_api_demos
 {
@@ -40,6 +41,11 @@ namespace wp7_api_demos
             {
                 MessageBox.Show(message, title, MessageBoxButton.OK);
             }));
+        }
+
+        public void GoBackToRoot()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

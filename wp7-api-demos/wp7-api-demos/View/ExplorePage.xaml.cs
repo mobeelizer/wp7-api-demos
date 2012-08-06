@@ -14,6 +14,16 @@ namespace wp7_api_demos.View
             InitializeComponent();
         }
 
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            while (this.NavigationService.BackStack.GetEnumerator().MoveNext())
+            {
+                this.NavigationService.RemoveBackEntry();
+            }
+
+            base.OnBackKeyPress(e);
+        }
+
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             if (this.NavigationContext.QueryString.ContainsKey("SessionCode"))
@@ -49,6 +59,29 @@ namespace wp7_api_demos.View
             {
                 MessageBox.Show(message, title, MessageBoxButton.OK);
             }));
+        }
+
+
+        public void GoBackToRoot()
+        {
+            int howMany = 0;
+            foreach (var item in this.NavigationService.BackStack)
+            {
+                ++howMany;
+            }
+
+            for (int i = 0; i < howMany - 1; ++i)
+            {
+                this.NavigationService.RemoveBackEntry();
+            }
+
+            this.NavigationService.GoBack();
+        }
+
+
+        private void OnLogout(object sender, EventArgs e)
+        {
+            this.viewModel.LogoutCommand.Execute(null);
         }
     }
 }

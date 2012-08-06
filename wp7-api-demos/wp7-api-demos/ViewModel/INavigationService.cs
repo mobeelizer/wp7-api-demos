@@ -12,5 +12,7 @@ namespace wp7_api_demos.ViewModel
         void GoBack();
 
         void ShowMessage(String title, String message);
+
+        void GoBackToRoot();
     }
 }

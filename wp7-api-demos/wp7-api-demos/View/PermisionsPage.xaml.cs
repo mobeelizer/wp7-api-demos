@@ -23,6 +23,16 @@ namespace wp7_api_demos.View
         public PermisionsPage()
         {
             InitializeComponent();
+            this.Loaded += new RoutedEventHandler(PageLoaded);
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!PageSettings.PageOpened(ExamplePage.Permisions))
+            {
+                OnInfoClicked(this, null);
+                PageSettings.SetPageOpened(ExamplePage.Permisions);
+            }
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -89,11 +99,29 @@ namespace wp7_api_demos.View
 
         private void OnLogout(object sender, EventArgs e)
         {
+            this.viewModel.LogoutCommand.Execute(null);
         }
 
         private void OnNext(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri(String.Format("/View/ConflictsPage.xaml?SessionCode={0}", viewModel.SessionCode), UriKind.Relative));
+        }
+
+
+        public void GoBackToRoot()
+        {
+            int howMany = 0;
+            foreach (var item in this.NavigationService.BackStack)
+            {
+                ++howMany;
+            }
+
+            for (int i = 0; i < howMany - 1; ++i)
+            {
+                this.NavigationService.RemoveBackEntry();
+            }
+
+            this.NavigationService.GoBack();
         }
     }
 }

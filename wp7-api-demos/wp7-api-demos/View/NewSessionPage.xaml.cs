@@ -49,5 +49,21 @@ namespace wp7_api_demos.View
                 MessageBox.Show(message, title, MessageBoxButton.OK);
             }));
         }
+
+        public void GoBackToRoot()
+        {
+            int howMany = 0;
+            foreach (var item in this.NavigationService.BackStack)
+            {
+                ++howMany;
+            }
+
+            for (int i = 0; i < howMany - 1; ++i)
+            {
+                this.NavigationService.RemoveBackEntry();
+            }
+
+            this.NavigationService.GoBack();
+        }
     }
 }

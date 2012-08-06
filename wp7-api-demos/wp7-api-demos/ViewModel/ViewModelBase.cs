@@ -9,12 +9,16 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using wp7_api_demos.Model;
+using Com.Mobeelizer.Mobile.Wp7;
 
 namespace wp7_api_demos.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         protected INavigationService navigationService;
+
+        protected ICommand logoutCommand;
 
         private bool isBusy;
 
@@ -25,6 +29,19 @@ namespace wp7_api_demos.ViewModel
         public ViewModelBase(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+        }
+
+        public ICommand LogoutCommand
+        {
+            get
+            {
+                if (this.logoutCommand == null)
+                {
+                    this.logoutCommand = new DelegateCommand(Logout);
+                }
+
+                return this.logoutCommand;
+            }
         }
 
         public bool IsBusy
@@ -62,6 +79,13 @@ namespace wp7_api_demos.ViewModel
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        protected void Logout(object arg)
+        {
+            Mobeelizer.Logout();
+            SessionSettings.RemoveSessionCode();
+            this.navigationService.GoBackToRoot();
         }
     }
 }

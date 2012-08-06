@@ -11,14 +11,12 @@ namespace wp7_api_demos.ViewModel
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private const String SESSION_KEY = "CurrentSession";
-
         public MainPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-            if (settings.Contains(SESSION_KEY))
+           
+            if (SessionSettings.IsSessionCreated)
             {
-                int? sessionCode = (int?)settings[SESSION_KEY];
+                int? sessionCode = SessionSettings.GetSessionCode();
                 if (sessionCode != null)
                 {
                     this.SessionCode = sessionCode.Value;
@@ -60,7 +58,7 @@ namespace wp7_api_demos.ViewModel
                     else
                     {
                         this.SessionCode = Int32.Parse(sessionCode);
-                        this.SaveSessionCode(this.SessionCode);
+                        SessionSettings.SaveSessionCode(this.SessionCode);
                         this.navigationService.Navigate(new Uri(String.Format("/View/NewSessionPage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
                     }
                 });
@@ -83,7 +81,7 @@ namespace wp7_api_demos.ViewModel
                             case MobeelizerLoginStatus.OK:
                                 App.CurrentUser = User.A;
                                 PushNotificationService.Instance.PerformUserRegistration();
-                                this.SaveSessionCode(this.SessionCode);
+                                SessionSettings.SaveSessionCode(this.SessionCode);
                                navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
                              break;
                             case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
@@ -102,21 +100,5 @@ namespace wp7_api_demos.ViewModel
                     }
                 });
         }
-
-        private void SaveSessionCode(int sessionCode)
-        {
-            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-            if (!settings.Contains(SESSION_KEY))
-            {
-                settings.Add(SESSION_KEY, this.SessionCode);
-            }
-            else
-            {
-                settings[SESSION_KEY] = this.SessionCode;
-            }
-
-            settings.Save();
-        }
-
     }
 }
