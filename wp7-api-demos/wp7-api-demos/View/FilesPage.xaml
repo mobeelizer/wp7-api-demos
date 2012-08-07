@@ -8,19 +8,46 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:localControls="clr-namespace:wp7_api_demos.View.Controls"
     xmlns:converters="clr-namespace:wp7_api_demos.ViewModel.Converters"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
 
     <phone:PhoneApplicationPage.Resources>
         <converters:MobeelizerFileToBitmapImageConverter x:Key="MobeelizerFileToBitmapImageConverter"/>
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
-        <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid x:Name="LayoutRoot">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"                />
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -35,20 +62,37 @@
             <!--ContentPanel - place additional content here-->
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="110"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
-                <ListBox x:Name="entityListBox" Grid.Row="1" ItemsSource="{Binding Entities}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhoto,Mode=TwoWay}" >
+                <Grid Background="#4C000000">
+                    <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                </Grid>
+                <ListBox x:Name="entityListBox" Grid.Row="1" ItemsSource="{Binding Entities}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhoto,Mode=TwoWay}"  Margin="10">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <ContentPresenter
+                                            HorizontalAlignment="Stretch" 
+                                            VerticalAlignment="Stretch" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate >
-                            <Grid >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="30"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Height="50" Margin="5" Source="{Binding PhotoFile, Converter={StaticResource MobeelizerFileToBitmapImageConverter}}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Owner}" HorizontalAlignment="Right"/>
+                            <Grid Background="#4C000000" Margin="1" >
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Height="50" Margin="5" Source="{Binding PhotoFile, Converter={StaticResource MobeelizerFileToBitmapImageConverter}}" HorizontalAlignment="Left"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Owner}" HorizontalAlignment="Right"/>
+                                </Grid>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

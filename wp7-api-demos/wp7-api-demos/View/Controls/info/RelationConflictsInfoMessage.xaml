@@ -29,7 +29,9 @@
                 <TextBlock Grid.Column="1" Text="{Binding Path=LocalizedResources.dialogRelationConflictsSyncText2,Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
             </Grid>
             <TextBlock Text="{Binding Path=LocalizedResources.dialogInfoChengeUserText, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Margin="10"/>
-            <Grid Height="40" HorizontalAlignment="Center"></Grid>
+            <Grid Height="40" HorizontalAlignment="Center">
+                <Image Source="/Resources/icons/help_switch_user.png"/>
+            </Grid>
             <TextBlock Text="{Binding Path=LocalizedResources.dialogInfoSyncText4, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" HorizontalAlignment="Center" FontWeight="Bold" />
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>

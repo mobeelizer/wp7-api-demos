@@ -44,7 +44,6 @@ namespace wp7_api_demos.View
                 this.DataContext = this.viewModel;
             }
 
-
             base.OnNavigatedTo(e);
         }
 

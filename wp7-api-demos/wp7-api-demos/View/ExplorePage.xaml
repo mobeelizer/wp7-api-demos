@@ -7,46 +7,108 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:localControls="clr-namespace:wp7_api_demos.View.Controls"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+
     <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
         <Grid x:Name="LayoutRoot" Background="Transparent">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <controls:Panorama Title="mobeelizer">
+                <controls:Panorama.Background>
+                    <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"/>
+                </controls:Panorama.Background>
 
-            <!--TitlePanel contains the name of the application and page title-->
-            <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-                <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-                <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-            </StackPanel>
+                <controls:PanoramaItem Header="session">
+                    <Grid Background="#4C000000" Margin="0,0,0,10" >
+                        <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"  />
+                            <RowDefinition Height="40" />
+                            <RowDefinition />
+                            <RowDefinition Height="120" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Your session code is:" />
+                        <TextBlock Grid.Row="1" Text="{Binding SessionCode}"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="26"/>
+                        <TextBlock Grid.Row="2" Text="You will need this code to connect to othres devices." TextWrapping="Wrap" />
+                        <localControls:SwitchUserControl Grid.Row="3" UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                        </Grid>
+                    </Grid>
+                </controls:PanoramaItem>
 
-            <!--ContentPanel - place additional content here-->
-            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="120"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="{Binding SessionCode}" />
-                <localControls:SwitchUserControl Grid.Row="1" UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
-                <ListBox Grid.Row="2" ItemsSource="{Binding MenuItems}" >
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Button Command="{Binding Value}">
-                                <TextBlock Text="{Binding Key}"/>
-                            </Button>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
+                <controls:PanoramaItem Header="explore" Orientation="Horizontal" >
+                    <toolkit:WrapPanel x:Name="wrapPanel" Orientation="Vertical" Margin="0,0,150,0">
+                        <Button Style="{StaticResource TileButtonStyle}" BorderThickness="0" Command="{Binding AboutPageCommand}">
+                            <toolkit:HubTile
+                                         Source="/Resources/icons/aboutIcon.png"
+                                         Title="About as"
+                                         Message="Getting started!" Margin="0"/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding SimpleSyncPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/syncIcon.png"
+                                         Title="Simple sync"
+                                         Message="Simple way to sync data..." Margin="0"/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding FilesPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/filesIcon.png"
+                                         Title="Files"
+                                         Message="Also simple way to share binaries..."/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding PermisionsPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/permissionIcon.png"
+                                         Title="Permisions"
+                                         Message="Protect your shared data..."/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding ConflictsPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/conflictsIcon.png"
+                                         Title="Conflicts"
+                                         Message="Warning, conflicts arise..."/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding RelationConflictsPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/relationConflictsIcon.png"
+                                         Title="Relation conflicts"
+                                         Message="Relations, conflicts - no problem at all..."/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding PushNotificationPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/pushIcon.png"
+                                         Title="Push notification"
+                                         Message="Notify users with minimum effort..."/>
+                        </Button>
+                        <Button Style="{StaticResource TileButtonStyle}" Command="{Binding WhatNextPageCommand}">
+                            <toolkit:HubTile Source="/Resources/icons/whatIcon.png"
+                                         Title="What next"
+                                         Message="What to do next?"/>
+                        </Button>
+                    </toolkit:WrapPanel>
+                </controls:PanoramaItem>
+            </controls:Panorama>
         </Grid>
     </localControls:BusyIndicatorControl>
 

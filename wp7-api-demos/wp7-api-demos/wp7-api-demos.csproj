@@ -119,6 +119,10 @@
     <Compile Include="ViewModel\ConflictsPageViewModel.cs" />
     <Compile Include="ViewModel\Converters\EmptyFieldConverter.cs" />
     <Compile Include="ViewModel\Converters\MobeelizerFileToBitmapImageConverter.cs" />
+    <Compile Include="ViewModel\Converters\OwnerToImageConverter.cs" />
+    <Compile Include="ViewModel\Converters\ScoreToSourceConverter.cs" />
+    <Compile Include="ViewModel\Converters\StatusCodeToNameConverter.cs" />
+    <Compile Include="ViewModel\Converters\StatusToImageConverter.cs" />
     <Compile Include="ViewModel\Converters\User2BooleanConverter.cs" />
     <Compile Include="ViewModel\Converters\User2StringConverter.cs" />
     <Compile Include="ViewModel\ExplorePageViewModel.cs" />
@@ -178,9 +182,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\NewSessionPage.xaml.cs">
-      <DependentUpon>NewSessionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\PermisionsPage.xaml.cs">
       <DependentUpon>PermisionsPage.xaml</DependentUpon>
     </Compile>
@@ -292,10 +293,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\NewSessionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.config" />
@@ -313,12 +310,35 @@
     </Content>
     <Content Include="Resources\application.xml" />
     <None Include="Resources\movies.txt" />
+    <Content Include="Resources\1440.jpg" />
+    <Content Include="Resources\icons\aboutIcon.png" />
     <Content Include="Resources\icons\appbar.add.rest.png" />
     <Content Include="Resources\icons\appbar.info.rest.png" />
     <Content Include="Resources\icons\appbar.stop.rest.png" />
     <Content Include="Resources\icons\appbar.sync.rest.png" />
+    <Content Include="Resources\icons\conflictsIcon.png" />
+    <Content Include="Resources\icons\filesIcon.png" />
     <Content Include="Resources\icons\filesys.png" />
+    <Content Include="Resources\icons\help_switch_user.png" />
+    <Content Include="Resources\icons\ic_star_big.png" />
+    <Content Include="Resources\icons\ic_status_new.png" />
+    <Content Include="Resources\icons\ic_status_pending.png" />
+    <Content Include="Resources\icons\ic_status_readytoship.png" />
+    <Content Include="Resources\icons\ic_status_received.png" />
+    <Content Include="Resources\icons\ic_status_shipped.png" />
+    <Content Include="Resources\icons\ic_sync.png" />
+    <Content Include="Resources\icons\permissionIcon.png" />
     <Content Include="Resources\icons\photo.png" />
+    <Content Include="Resources\icons\rand.png" />
+    <Content Include="Resources\icons\star_1.fw.png" />
+    <Content Include="Resources\icons\star_2.fw.png" />
+    <Content Include="Resources\icons\star_3.fw.png" />
+    <Content Include="Resources\icons\star_4.fw.png" />
+    <Content Include="Resources\icons\star_5.fw.png" />
+    <Content Include="Resources\icons\syncIcon.png" />
+    <Content Include="Resources\icons\whatIcon.png" />
+    <Content Include="Resources\icons\pushIcon.png" />
+    <Content Include="Resources\icons\relationConflictsIcon.png" />
     <Content Include="Resources\images\landscape_01.jpg" />
     <Content Include="Resources\images\landscape_02.jpg" />
     <Content Include="Resources\images\landscape_03.jpg" />

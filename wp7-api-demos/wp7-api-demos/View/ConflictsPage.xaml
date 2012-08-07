@@ -14,17 +14,44 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
-    
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+
     <UserControl.Resources>
         <coding4Fun:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <convertrs:ScoreToSourceConverter x:Key="ScoreToSourceConverter"/>
     </UserControl.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
-        <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid x:Name="LayoutRoot" >
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"                />
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -34,8 +61,9 @@
             <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
                 <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
                 <TextBlock x:Name="PageTitle" Text="conflicts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-                <Grid Margin="0,20,0,0" Visibility="{Binding IsWarningVisable, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid Background="#4C000000" Margin="0,20,0,0" Visibility="{Binding IsWarningVisable, Converter={StaticResource BoolToVisibilityConverter}}">
                     <TextBlock Text="Warning!" FontWeight="Bold" Style="{StaticResource PhoneTextAccentStyle}" />
+                    <Image Source="/Resources/icons/ic_sync.png" Width="35" Height="27" Margin="168,6,0,0" HorizontalAlignment="Left"/>
                     <TextBlock Margin="10,24,0,0" Text="{Binding Path=LocalizedResources.footerWarning, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
                 </Grid>
             </StackPanel>
@@ -43,29 +71,46 @@
             <!--ContentPanel - place additional content here-->
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition MaxHeight="115"/>
+                    <RowDefinition MaxHeight="110"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>    
-                <ListBox Grid.Row="1" ItemsSource="{Binding Entities}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" >
+                <Grid Background="#4C000000">
+                    <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                </Grid>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Entities}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" Margin="10" >
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <ContentPresenter
+                                            HorizontalAlignment="Stretch" 
+                                            VerticalAlignment="Stretch" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="30"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding title}" FontSize="26"/>
-                                    <TextBlock Text="{Binding score}" Grid.Row="1"/>
+                            <Grid Margin="1" Background="#4C000000">
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding title}" FontSize="26"/>
+                                        <Image Height="25" Source="{Binding score, Converter={StaticResource ScoreToSourceConverter}}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    </Grid>
+                                    <Image Grid.Column="1" Height="27" Width="35" Visibility="{Binding Conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Source="/Resources/icons/ic_sync.png" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Owner}" HorizontalAlignment="Right"/>
                                 </Grid>
-                                <Rectangle Grid.Column="1" Height="30" Width="30" Fill="Red" Visibility="{Binding Conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Top" />
-                                <TextBlock Grid.Column="2" Text="{Binding Owner}" HorizontalAlignment="Right"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

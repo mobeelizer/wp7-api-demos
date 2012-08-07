@@ -174,6 +174,7 @@ namespace wp7_api_demos.ViewModel
             entity.name = this.GetName();
             entity.status = new Random().Next(1, 5);
             entity.AddCommand = AddItemCommand;
+            entity.Items = new ObservableCollection<graphsConflictsItemEntity>();
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
                 transaction.GetModels<graphsConflictsOrderEntity>().InsertOnSubmit(entity);
@@ -187,7 +188,7 @@ namespace wp7_api_demos.ViewModel
         {
             String user = App.CurrentUser.ToString();
             int number = new Random().Next(0, 99);
-            return String.Format("Order {0}/00{1}", user, number);
+            return String.Format("{0}/00{1}", user, number);
         }
 
         private void OnAddRelation(object param)

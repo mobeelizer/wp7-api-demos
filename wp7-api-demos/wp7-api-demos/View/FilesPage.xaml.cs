@@ -89,7 +89,6 @@ namespace wp7_api_demos.View
             }));
         }
 
-
         public void ShowMessage(string title, string message)
         {
             this.Dispatcher.BeginInvoke(new System.Action(() =>
@@ -143,6 +142,7 @@ namespace wp7_api_demos.View
                     this.photoChooserTask.Show();
                 };
             RoundButton randomButton = new RoundButton();
+            randomButton.ImageSource = new BitmapImage(new Uri("/Resources/icons/rand.png", UriKind.Relative));
                 randomButton.Click += (sender, args) =>
                 {
                     questionMessage.Hide();

@@ -41,7 +41,24 @@ namespace wp7_api_demos.ViewModel
             }
         }
 
-        public int SessionCode { get; set; }
+        private int sessionCode;
+
+        public int SessionCode
+        {
+            get
+            {
+                return this.sessionCode;
+            }
+
+            set
+            {
+                this.sessionCode = value;
+                Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.RaisePropertyChanged("SessionCode");
+                    }));
+            }
+        }
 
         private void CreateNewSession(object arg)
         {
@@ -59,7 +76,10 @@ namespace wp7_api_demos.ViewModel
                     {
                         this.SessionCode = Int32.Parse(sessionCode);
                         SessionSettings.SaveSessionCode(this.SessionCode);
-                        this.navigationService.Navigate(new Uri(String.Format("/View/NewSessionPage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
+                        Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                ConnectToExistingSession(null);
+                            }));
                     }
                 });
             createTask.Execute();
@@ -80,8 +100,8 @@ namespace wp7_api_demos.ViewModel
                         {
                             case MobeelizerLoginStatus.OK:
                                 App.CurrentUser = User.A;
-                                PushNotificationService.Instance.PerformUserRegistration();
                                 SessionSettings.SaveSessionCode(this.SessionCode);
+                                PushNotificationService.Instance.PerformUserRegistration();
                                navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
                              break;
                             case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:

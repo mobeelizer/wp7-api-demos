@@ -9,20 +9,137 @@ namespace wp7_api_demos.ViewModel
     {
         private int sessionCode;
 
+        private ICommand aboutPageCommand;
+
+        public ICommand AboutPageCommand
+        {
+            get
+            {
+                if (this.aboutPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.aboutPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/AboutAsPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.aboutPageCommand;
+            }
+        }
+
+        private ICommand simpleSyncPageCommand;
+
+        public ICommand SimpleSyncPageCommand
+        {
+            get
+            {
+                if (this.simpleSyncPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.simpleSyncPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/SimpleSyncPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.simpleSyncPageCommand;
+            }
+        }
+
+        private ICommand filesPageCommand;
+
+        public ICommand FilesPageCommand
+        {
+            get
+            {
+                if (this.filesPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.filesPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/FilesPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.filesPageCommand;
+            }
+        }
+
+        private ICommand permisionsPageCommand;
+
+        public ICommand PermisionsPageCommand
+        {
+            get
+            {
+                if (this.permisionsPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.permisionsPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/PermisionsPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.permisionsPageCommand;
+            }
+        }
+
+        private ICommand conflictsPageCommand;
+
+        public ICommand ConflictsPageCommand
+        {
+            get
+            {
+                if (this.conflictsPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.conflictsPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/ConflictsPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.conflictsPageCommand;
+            }
+        }
+
+        private ICommand relationConflictsPageCommand;
+
+        public ICommand RelationConflictsPageCommand
+        {
+            get
+            {
+                if (this.relationConflictsPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.relationConflictsPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/RelationConflictsPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.relationConflictsPageCommand;
+            }
+        }
+
+        private ICommand pushNotificationPageCommand;
+
+        public ICommand PushNotificationPageCommand
+        {
+            get
+            {
+                if (this.pushNotificationPageCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.pushNotificationPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/PushNotificationPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.pushNotificationPageCommand;
+            }
+        }
+
+        private ICommand whatNextPageCommand;
+
+        public ICommand WhatNextPageCommand
+        {
+            get
+            {
+                if (this.whatNextPageCommand == null)
+                {
+                    this.whatNextPageCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/WhatNextPage.xaml", UriKind.Relative)); });
+                }
+
+                return this.whatNextPageCommand;
+            }
+        }
+
         public ExplorePageViewModel(INavigationService navigationService, int sessionCode)
             : base(navigationService)
         {
             this.SessionCode = sessionCode;
-            this.MenuItems = new Dictionary<String, ICommand>();
-            String sessionParam = String.Format("?SessionCode={0}", sessionCode);
-            this.MenuItems.Add(Resources.ResourceDictionary.m_about, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/AboutAsPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_sync, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/SimpleSyncPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_files, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/FilesPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_permisions, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/PermisionsPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_conflicts, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/ConflictsPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_relations, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/RelationConflictsPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_push, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/PushNotificationPage.xaml" + sessionParam, UriKind.Relative)); }));
-            this.MenuItems.Add(Resources.ResourceDictionary.m_whatNext, new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/WhatNextPage.xaml", UriKind.Relative)); }));
         }
 
         public int SessionCode
@@ -38,8 +155,6 @@ namespace wp7_api_demos.ViewModel
                 this.RaisePropertyChanged("SessionCode");
             }
         }
-
-        public IDictionary<String, ICommand> MenuItems { get; private set; }
 
         public ICommand UserSwitchedCommand
         {

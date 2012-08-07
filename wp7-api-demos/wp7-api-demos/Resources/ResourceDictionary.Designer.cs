@@ -322,6 +322,114 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://mobeelizer.com/.
+        /// </summary>
+        public static string gettingStartedLink {
+            get {
+                return ResourceManager.GetString("gettingStartedLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visit.
+        /// </summary>
+        public static string gettingStartedLinkText {
+            get {
+                return ResourceManager.GetString("gettingStartedLinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mobeelizer.com.
+        /// </summary>
+        public static string gettingStartedLinkText1 {
+            get {
+                return ResourceManager.GetString("gettingStartedLinkText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for more info..
+        /// </summary>
+        public static string gettingStartedLinkText2 {
+            get {
+                return ResourceManager.GetString("gettingStartedLinkText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobeelizer is a Synchronization-as-a-Service for mobile developers. We strive to make it ridiculously easy to get synchronization for mobile apps up and running, so you can focus on creating mobile apps, without worrying about data exchange..
+        /// </summary>
+        public static string gettingStartedText {
+            get {
+                return ResourceManager.GetString("gettingStartedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When using Mobeelizer, we automatically take care about the backend, configuration and complicated aspect of synchronization conflicts..
+        /// </summary>
+        public static string gettingStartedText1 {
+            get {
+                return ResourceManager.GetString("gettingStartedText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This app contains examples of using mobeelizer in different scenarios. You can see how to sync data, binary files or how to handle conflicts. It&apos;s only a small possibilities what mobeelizer can do for you. So have fun!.
+        /// </summary>
+        public static string gettingStartedText3 {
+            get {
+                return ResourceManager.GetString("gettingStartedText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string graphsDetailsNew {
+            get {
+                return ResourceManager.GetString("graphsDetailsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string graphsDetailsPending {
+            get {
+                return ResourceManager.GetString("graphsDetailsPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready to ship.
+        /// </summary>
+        public static string graphsDetailsReady {
+            get {
+                return ResourceManager.GetString("graphsDetailsReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received.
+        /// </summary>
+        public static string graphsDetailsReceived {
+            get {
+                return ResourceManager.GetString("graphsDetailsReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shipped.
+        /// </summary>
+        public static string graphsDetailsShipped {
+            get {
+                return ResourceManager.GetString("graphsDetailsShipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About Us.
         /// </summary>
         public static string m_about {
@@ -411,6 +519,24 @@ namespace wp7_api_demos.Resources {
         public static string movies {
             get {
                 return ResourceManager.GetString("movies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to So you&apos;ve seen how revolutionary mobeelizer is and what Synchronization-as-a-Service means for your app..
+        /// </summary>
+        public static string whatNextText {
+            get {
+                return ResourceManager.GetString("whatNextText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now it&apos;s time for you to code&amp;play with mobeelizer by yourself..
+        /// </summary>
+        public static string whatNextText1 {
+            get {
+                return ResourceManager.GetString("whatNextText1", resourceCulture);
             }
         }
     }

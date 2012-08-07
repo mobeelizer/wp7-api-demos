@@ -232,4 +232,46 @@
   <data name="footerWarning" xml:space="preserve">
     <value>Items marked with     were not synchronized, because other user edited them at the same time.</value>
   </data>
+  <data name="gettingStartedLink" xml:space="preserve">
+    <value>http://mobeelizer.com/</value>
+  </data>
+  <data name="gettingStartedLinkText" xml:space="preserve">
+    <value>Visit</value>
+  </data>
+  <data name="gettingStartedLinkText1" xml:space="preserve">
+    <value>mobeelizer.com</value>
+  </data>
+  <data name="gettingStartedLinkText2" xml:space="preserve">
+    <value>for more info.</value>
+  </data>
+  <data name="gettingStartedText" xml:space="preserve">
+    <value>Mobeelizer is a Synchronization-as-a-Service for mobile developers. We strive to make it ridiculously easy to get synchronization for mobile apps up and running, so you can focus on creating mobile apps, without worrying about data exchange.</value>
+  </data>
+  <data name="gettingStartedText1" xml:space="preserve">
+    <value>When using Mobeelizer, we automatically take care about the backend, configuration and complicated aspect of synchronization conflicts.</value>
+  </data>
+  <data name="gettingStartedText3" xml:space="preserve">
+    <value>This app contains examples of using mobeelizer in different scenarios. You can see how to sync data, binary files or how to handle conflicts. It's only a small possibilities what mobeelizer can do for you. So have fun!</value>
+  </data>
+  <data name="graphsDetailsNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="graphsDetailsPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="graphsDetailsReady" xml:space="preserve">
+    <value>Ready to ship</value>
+  </data>
+  <data name="graphsDetailsReceived" xml:space="preserve">
+    <value>Received</value>
+  </data>
+  <data name="graphsDetailsShipped" xml:space="preserve">
+    <value>Shipped</value>
+  </data>
+  <data name="whatNextText" xml:space="preserve">
+    <value>So you've seen how revolutionary mobeelizer is and what Synchronization-as-a-Service means for your app.</value>
+  </data>
+  <data name="whatNextText1" xml:space="preserve">
+    <value>Now it's time for you to code&amp;play with mobeelizer by yourself.</value>
+  </data>
 </root>

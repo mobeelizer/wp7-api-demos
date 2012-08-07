@@ -6,15 +6,41 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"                />
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -27,7 +53,20 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0"></Grid>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="#4C000000">
+                    <TextBlock Margin="10" Text="{Binding Path=LocalizedResources.gettingStartedText, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                    <TextBlock Margin="10" Text="{Binding Path=LocalizedResources.gettingStartedText1, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=LocalizedResources.gettingStartedLinkText, Source={StaticResource LocalizedStrings}}"/>
+                        <HyperlinkButton TargetName="_blank" NavigateUri="{Binding Path=LocalizedResources.gettingStartedLink, Source={StaticResource LocalizedStrings}}" Content="{Binding Path=LocalizedResources.gettingStartedLinkText1, Source={StaticResource LocalizedStrings}}"/>
+                        <TextBlock Text="{Binding Path=LocalizedResources.gettingStartedLinkText2, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <TextBlock Margin="10" Text="{Binding Path=LocalizedResources.gettingStartedText3, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

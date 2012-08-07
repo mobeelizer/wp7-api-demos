@@ -7,40 +7,81 @@
     xmlns:localControls="clr-namespace:wp7_api_demos.View.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
-        <Grid x:Name="LayoutRoot" Background="Transparent">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <!--TitlePanel contains the name of the application and page title-->
-            <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-                <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
-                <TextBlock x:Name="PageTitle" Text="push notifications" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-            </StackPanel>
-
-            <!--ContentPanel - place additional content here-->
-            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="LayoutRoot" >
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"                />
+                </Grid.Background>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
-                <Button Content="Send push notification" Grid.Row="1" Height="72" HorizontalAlignment="Left" Margin="12,54,0,0" Name="button1" VerticalAlignment="Top" Width="438"  Command="{Binding SendPushCommand}"/>
-                <Button Content="Send to A" Grid.Row="1" Height="72" Margin="6,169,12,0" Name="button2" VerticalAlignment="Top" Command="{Binding SendPushToACommand}" />
-                <Button Content="Send to B" Grid.Row="1" Height="72" HorizontalAlignment="Left" Margin="6,247,0,0" Name="button3" VerticalAlignment="Top" Width="438" Command="{Binding SendPushToBCommand}" />
-                <TextBlock Grid.Row="1" Height="30" HorizontalAlignment="Left" Margin="12,18,0,0" Name="textBlock1" Text="Send to everyone" VerticalAlignment="Top" Width="438" />
-                <TextBlock Grid.Row="1" Height="30" HorizontalAlignment="Left" Margin="9,133,0,0" Name="textBlock2" Text="Send to users" VerticalAlignment="Top" Width="441" />
-            </Grid>
+
+                <!--TitlePanel contains the name of the application and page title-->
+                <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+                    <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock x:Name="PageTitle" Text="push notifications" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                </StackPanel>
+
+                <!--ContentPanel - place additional content here-->
+            <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <Grid x:Name="ContentPanel"  Margin="12,0,12,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Background="#4C000000">
+                        <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                    </Grid>
+                    <Grid Grid.Row="1"  Margin="10" Background="#4C000000">
+                        <Grid Margin="10" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="72"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="72"/>
+                                <RowDefinition Height="72"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="Send push notification" Grid.Row="1" Command="{Binding SendPushCommand}"/>
+                            <Button Content="Send to A" Grid.Row="3"  Command="{Binding SendPushToACommand}" />
+                            <Button Content="Send to B" Grid.Row="4"  Command="{Binding SendPushToBCommand}" />
+                            <TextBlock Grid.Row="0"  HorizontalAlignment="Left" Text="Send to everyone" VerticalAlignment="Top" />
+                            <TextBlock Grid.Row="2"  HorizontalAlignment="Left" Text="Send to users" VerticalAlignment="Top"  />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </localControls:BusyIndicatorControl>
     <!--Sample code showing usage of ApplicationBar-->

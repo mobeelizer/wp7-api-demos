@@ -100,7 +100,7 @@ namespace wp7_api_demos.ViewModel
             notification.Add("X-WindowsPhone-Target", "toast");
             notification.Add("Text1", "Push received!");
             notification.Add("Text2", "Wp7 device greets all users.");
-            notification.Add("Param", "/MainPage.xaml");
+            notification.Add("Param", "/View/MainPage.xaml");
             notification.Add("alert", "Wp7 device greets all users.");
             Mobeelizer.SendRemoteNotification(notification, (result) =>
                 {
@@ -121,7 +121,7 @@ namespace wp7_api_demos.ViewModel
             notification.Add("X-WindowsPhone-Target", "toast");
             notification.Add("Text1", "Push received!");
             notification.Add("Text2", "Wp7 device greets user A.");
-            notification.Add("Param", "/MainPage.xaml");
+            notification.Add("Param", "/View/MainPage.xaml");
             notification.Add("alert", "Wp7 device greets user A.");
             IList<String> users = new List<String>();
             users.Add("A");
@@ -144,8 +144,8 @@ namespace wp7_api_demos.ViewModel
             notification.Add("X-NotificationClass", "2");
             notification.Add("X-WindowsPhone-Target", "toast");
             notification.Add("Text1", "Push received!");
-            notification.Add("Text2", "Wp7 device greets userB.");
-            notification.Add("Param", "/MainPage.xaml");
+            notification.Add("Text2", "Wp7 device greets user B.");
+            notification.Add("Param", "/View/MainPage.xaml");
             notification.Add("alert", "Wp7 device greets user B.");
             IList<String> users = new List<String>();
             users.Add("B");
