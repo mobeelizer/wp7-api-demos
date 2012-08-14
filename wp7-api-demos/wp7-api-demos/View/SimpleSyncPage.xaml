@@ -90,7 +90,7 @@
                                         <ColumnDefinition Width="30"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding title}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Owner}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding owner}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                 </Grid>
                             </Grid>
                         </DataTemplate>

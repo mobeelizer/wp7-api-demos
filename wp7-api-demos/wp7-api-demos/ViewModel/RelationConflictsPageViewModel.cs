@@ -177,8 +177,8 @@ namespace wp7_api_demos.ViewModel
             entity.Items = new ObservableCollection<graphsConflictsItemEntity>();
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                transaction.GetModels<graphsConflictsOrderEntity>().InsertOnSubmit(entity);
-                transaction.Commit();
+                transaction.GetModelSet<graphsConflictsOrderEntity>().InsertOnSubmit(entity);
+                transaction.SubmitChanges();
             }
 
             this.Entities.Add(entity);
@@ -201,8 +201,8 @@ namespace wp7_api_demos.ViewModel
             entity.RemoveCommand = RemoveItemCommand;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                transaction.GetModels<graphsConflictsItemEntity>().InsertOnSubmit(entity);
-                transaction.Commit();
+                transaction.GetModelSet<graphsConflictsItemEntity>().InsertOnSubmit(entity);
+                transaction.SubmitChanges();
             }
             if (order.Items == null)
             {
@@ -214,14 +214,21 @@ namespace wp7_api_demos.ViewModel
 
         private void OnRemoveRelation(object param)
         {
-            graphsConflictsItemEntity item = param as graphsConflictsItemEntity;
-            using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+            if (Mobeelizer.CheckSyncStatus().IsRunning())
             {
-                transaction.GetModels<graphsConflictsItemEntity>().DeleteOnSubmit(item);
-                transaction.Commit();
+                navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_waitUntilSyncFinish);
             }
+            else
+            {
+                graphsConflictsItemEntity item = param as graphsConflictsItemEntity;
+                using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+                {
+                    transaction.GetModelSet<graphsConflictsItemEntity>().DeleteOnSubmit(item);
+                    transaction.SubmitChanges();
+                }
 
-            RefreshEntitiesList();
+                RefreshEntitiesList();
+            }
         }
 
         private void OnSync(object param)
@@ -256,14 +263,14 @@ namespace wp7_api_demos.ViewModel
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
-                var query = from graphsConflictsOrderEntity entity in transaction.GetModels<graphsConflictsOrderEntity>() select entity;
+                var query = from graphsConflictsOrderEntity entity in transaction.GetModelSet<graphsConflictsOrderEntity>() select entity;
                 foreach (var entity in query)
                 {
                     entity.Items = new ObservableCollection<graphsConflictsItemEntity>();
-                    var relationQuery = from graphsConflictsItemEntity r in transaction.GetModels<graphsConflictsItemEntity>() where r.orderGuid == entity.guid select r;
+                    var relationQuery = from graphsConflictsItemEntity r in transaction.GetModelSet<graphsConflictsItemEntity>() where r.orderGuid == entity.guid select r;
                     foreach (var relation in relationQuery)
                     {
-                        if (relation.Conflicted)
+                        if (relation.conflicted)
                         {
                             inConflict = true;
                         }
@@ -271,7 +278,7 @@ namespace wp7_api_demos.ViewModel
                         entity.Items.Add(relation);
                     }
 
-                    if (entity.Conflicted)
+                    if (entity.conflicted)
                     {
                         inConflict = true;
                     }

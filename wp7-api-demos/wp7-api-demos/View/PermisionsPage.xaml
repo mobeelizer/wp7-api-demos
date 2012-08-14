@@ -97,7 +97,7 @@
                                         <TextBlock Text="{Binding title}" FontSize="26"/>
                                         <TextBlock Grid.Row="1" Text="{Binding director, Converter={StaticResource EmptyFielsConverter}}" FontSize="20" Margin="10,0,0,0"/>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="{Binding Owner}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding owner}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                 </Grid>
                             </Grid>
                         </DataTemplate>

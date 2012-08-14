@@ -13,7 +13,6 @@ namespace wp7_api_demos.ViewModel
     {
         public MainPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-           
             if (SessionSettings.IsSessionCreated)
             {
                 int? sessionCode = SessionSettings.GetSessionCode();

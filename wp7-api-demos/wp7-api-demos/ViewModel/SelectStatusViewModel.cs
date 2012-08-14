@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Com.Mobeelizer.Mobile.Wp7;
+using Com.Mobeelizer.Mobile.Wp7.Api;
 using wp7_api_demos.Model.MobeelizerModels;
 using System.Linq;
 
@@ -29,7 +30,7 @@ namespace wp7_api_demos.ViewModel
             this.modelGuid = modelGuid;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                var query = from graphsConflictsOrderEntity e in transaction.GetModels<graphsConflictsOrderEntity>() where e.guid == modelGuid select e;
+                var query = from graphsConflictsOrderEntity e in transaction.GetModelSet<graphsConflictsOrderEntity>() where e.guid == modelGuid select e;
                 graphsConflictsOrderEntity entity = query.Single();
                 this.Title = entity.name;
             }
@@ -49,14 +50,21 @@ namespace wp7_api_demos.ViewModel
 
             set
             {
-                using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+                if (Mobeelizer.CheckSyncStatus().IsRunning())
                 {
-                    var query = from graphsConflictsOrderEntity e in transaction.GetModels<graphsConflictsOrderEntity>() where e.guid == modelGuid select e;
-                    graphsConflictsOrderEntity entity = query.Single();
-                    entity.status = value;
-                    transaction.Commit();
+                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_waitUntilSyncFinish);
                 }
-                this.navigationService.GoBack();
+                else
+                {
+                    using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+                    {
+                        var query = from graphsConflictsOrderEntity e in transaction.GetModelSet<graphsConflictsOrderEntity>() where e.guid == modelGuid select e;
+                        graphsConflictsOrderEntity entity = query.Single();
+                        entity.status = value;
+                        transaction.SubmitChanges();
+                    }
+                    this.navigationService.GoBack();
+                }
             }
         }
     }

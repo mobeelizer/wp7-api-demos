@@ -93,8 +93,8 @@ namespace wp7_api_demos.ViewModel
             entity.title = movie.Title;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                transaction.GetModels<simpleSyncEntity>().InsertOnSubmit(entity);
-                transaction.Commit();
+                transaction.GetModelSet<simpleSyncEntity>().InsertOnSubmit(entity);
+                transaction.SubmitChanges();
             }
 
             this.Entities.Add(entity);
@@ -131,7 +131,7 @@ namespace wp7_api_demos.ViewModel
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
-                var query = from simpleSyncEntity entity in transaction.GetModels<simpleSyncEntity>() select entity;
+                var query = from simpleSyncEntity entity in transaction.GetModelSet<simpleSyncEntity>() select entity;
                 foreach (var entity in query)
                 {
                     this.Entities.Add(entity);

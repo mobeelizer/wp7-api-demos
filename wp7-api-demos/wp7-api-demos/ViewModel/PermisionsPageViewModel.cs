@@ -94,8 +94,8 @@ namespace wp7_api_demos.ViewModel
             entity.director = movie.Director;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                transaction.GetModels<permissionsEntity>().InsertOnSubmit(entity);
-                transaction.Commit();
+                transaction.GetModelSet<permissionsEntity>().InsertOnSubmit(entity);
+                transaction.SubmitChanges();
             }
 
             this.Entities.Add(entity);
@@ -132,7 +132,7 @@ namespace wp7_api_demos.ViewModel
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
-                var query = from permissionsEntity entity in transaction.GetModels<permissionsEntity>() select entity;
+                var query = from permissionsEntity entity in transaction.GetModelSet<permissionsEntity>() select entity;
                 foreach (var entity in query)
                 {
                     this.Entities.Add(entity);

@@ -133,12 +133,15 @@
     <value>Mobeelizer Demos requires an active internet connection.</value>
   </data>
   <data name="e_syncDisabled" xml:space="preserve">
-    <value>Synchronization is disabled due to Manifest settings (MOBEELIZER_MODE = development).</value>
+    <value>Synchronization already in progress, wait until other synchronization finished or synchronization is disabled due to Manifest settings (MOBEELIZER_MODE = development).</value>
   </data>
   <data name="e_syncFailed" xml:space="preserve">
     <value>Cannot perform synchronization. Please try again later.</value>
   </data>
   <data name="e_title" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="e_waitUntilSyncFinish" xml:space="preserve">
+    <value>Wait until synchronization finishes.</value>
   </data>
 </root>

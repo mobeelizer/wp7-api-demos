@@ -4,6 +4,7 @@ using System.ComponentModel;
 using wp7_api_demos.Model;
 using Com.Mobeelizer.Mobile.Wp7;
 using System.Windows;
+using Com.Mobeelizer.Mobile.Wp7.Api;
 
 namespace wp7_api_demos.ViewModel
 {
@@ -24,7 +25,7 @@ namespace wp7_api_demos.ViewModel
 
             set
             {
-                if (App.CurrentUser != value)
+                if (App.CurrentUser != value && !Mobeelizer.CheckSyncStatus().IsRunning())
                 {
                     this.SwitchingUserCommand.Execute(null);
                     String user = String.Empty;
@@ -40,7 +41,6 @@ namespace wp7_api_demos.ViewModel
                             password = Resources.Config.c_userBPassword;
                             break;
                     }
-
                     Mobeelizer.Login(SessionCode.ToString(), user, password, (result) =>
                         {
                             if (result.GetLoginStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.OK)

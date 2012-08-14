@@ -21,21 +21,21 @@ namespace wp7_api_demos.Model.MobeelizerModels
 
         public ObservableCollection<graphsConflictsItemEntity> Items { get; set; }
 
-        public bool Conflicted
-        {
-            get
-            {
-                return base.conflicted;
-            }
-        }
+        //public bool Conflicted
+        //{
+        //    get
+        //    {
+        //        return base.conflicted;
+        //    }
+        //}
 
-        public String Owner
-        {
-            get
-            {
-                return base.owner;
-            }
-        }
+        //public String Owner
+        //{
+        //    get
+        //    {
+        //        return base.owner;
+        //    }
+        //}
 
         public ICommand AddCommand { get; set; }
     }

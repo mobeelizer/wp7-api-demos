@@ -148,8 +148,8 @@ namespace wp7_api_demos.ViewModel
             entity.score = movie.Rating;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                transaction.GetModels<conflictsEntity>().InsertOnSubmit(entity);
-                transaction.Commit();
+                transaction.GetModelSet<conflictsEntity>().InsertOnSubmit(entity);
+                transaction.SubmitChanges();
             }
 
             this.Entities.Add(entity);
@@ -187,10 +187,10 @@ namespace wp7_api_demos.ViewModel
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
-                var query = from conflictsEntity entity in transaction.GetModels<conflictsEntity>() select entity;
+                var query = from conflictsEntity entity in transaction.GetModelSet<conflictsEntity>() select entity;
                 foreach (var entity in query)
                 {
-                    if (entity.Conflicted)
+                    if (entity.conflicted)
                     {
                         inConflict = true;
                     }

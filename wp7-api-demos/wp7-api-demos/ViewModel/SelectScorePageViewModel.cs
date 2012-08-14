@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Com.Mobeelizer.Mobile.Wp7;
+using Com.Mobeelizer.Mobile.Wp7.Api;
 using wp7_api_demos.Model.MobeelizerModels;
 
 namespace wp7_api_demos.ViewModel
@@ -20,7 +21,7 @@ namespace wp7_api_demos.ViewModel
             this.modelGuid = modelGuid;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                var query = from conflictsEntity e in transaction.GetModels<conflictsEntity>() where e.guid == modelGuid select e;
+                var query = from conflictsEntity e in transaction.GetModelSet<conflictsEntity>() where e.guid == modelGuid select e;
                 conflictsEntity entity = query.Single();
                 this.Title = entity.title;
             }
@@ -41,14 +42,23 @@ namespace wp7_api_demos.ViewModel
 
             set
             {
-                using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+                if (Mobeelizer.CheckSyncStatus().IsRunning())
                 {
-                    var query = from conflictsEntity e in transaction.GetModels<conflictsEntity>() where e.guid == modelGuid select e;
-                    conflictsEntity entity = query.Single();
-                    entity.score = value;
-                    transaction.Commit();
+                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_waitUntilSyncFinish);
                 }
-                this.navigationService.GoBack();
+                else
+                {
+                    using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+                    {
+                        var query = from conflictsEntity e in transaction.GetModelSet<conflictsEntity>() where e.guid == modelGuid select e;
+                        conflictsEntity entity = query.Single();
+
+                        entity.score = value;
+                        transaction.SubmitChanges();
+                    }
+
+                    this.navigationService.GoBack();
+                }
             }
         }
     }

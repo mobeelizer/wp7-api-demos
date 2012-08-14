@@ -54,7 +54,10 @@ namespace wp7_api_demos.View
 
         public void ShowMessage(string title, string message)
         {
-            throw new NotImplementedException();
+            this.Dispatcher.BeginInvoke(new System.Action(() =>
+            {
+                MessageBox.Show(message, title, MessageBoxButton.OK);
+            }));
         }
 
 

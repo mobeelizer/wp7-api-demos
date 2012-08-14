@@ -26,12 +26,13 @@ namespace wp7_api_demos.Model.MobeelizerModels
             }
         }
 
-        public String Owner
-        {
-            get
-            {
-                return base.owner;
-            }
-        }
+        //public String Owner
+        //{
+        //    get
+        //    {
+        //        return base.owner;
+        //    }
+        //}
     }
 }
+

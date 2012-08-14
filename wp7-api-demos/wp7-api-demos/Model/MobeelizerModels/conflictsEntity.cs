@@ -8,7 +8,7 @@ namespace wp7_api_demos.Model.MobeelizerModels
     public class conflictsEntity : MobeelizerWp7Model
     {
         [Column(IsPrimaryKey = true)]
-        public override string guid { get; set; }
+        public override String guid { get; set; }
 
         [Column()]
         public int score { get; set; }
@@ -16,20 +16,20 @@ namespace wp7_api_demos.Model.MobeelizerModels
         [Column()]
         public String title { get; set; }
 
-        public String Owner
-        {
-            get
-            {
-                return base.owner;
-            }
-        }
+        //public String Owner
+        //{
+        //    get
+        //    {
+        //        return base.owner;
+        //    }
+        //}
 
-        public bool Conflicted
-        {
-            get
-            {
-                return base.conflicted;
-            }
-        }
+        //public bool Conflicted
+        //{
+        //    get
+        //    {
+        //        return base.conflicted;
+        //    }
+        //}
     }
 }

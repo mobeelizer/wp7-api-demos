@@ -124,8 +124,8 @@ namespace wp7_api_demos.ViewModel
                 entity.PhotoFile = photo;
                 using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
                 {
-                    transaction.GetModels<fileSyncEntity>().InsertOnSubmit(entity);
-                    transaction.Commit();
+                    transaction.GetModelSet<fileSyncEntity>().InsertOnSubmit(entity);
+                    transaction.SubmitChanges();
                 }
 
                 Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
@@ -167,7 +167,7 @@ namespace wp7_api_demos.ViewModel
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
-                var query = from fileSyncEntity entity in transaction.GetModels<fileSyncEntity>() select entity;
+                var query = from fileSyncEntity entity in transaction.GetModelSet<fileSyncEntity>() select entity;
                 foreach (var entity in query)
                 {
                     this.Entities.Add(entity);

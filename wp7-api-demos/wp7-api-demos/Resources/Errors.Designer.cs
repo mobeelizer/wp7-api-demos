@@ -106,7 +106,7 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Synchronization is disabled due to Manifest settings (MOBEELIZER_MODE = development)..
+        ///   Looks up a localized string similar to Synchronization already in progress, wait until other synchronization finished or synchronization is disabled due to Manifest settings (MOBEELIZER_MODE = development)..
         /// </summary>
         internal static string e_syncDisabled {
             get {
@@ -129,6 +129,15 @@ namespace wp7_api_demos.Resources {
         internal static string e_title {
             get {
                 return ResourceManager.GetString("e_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait until synchronization finishes..
+        /// </summary>
+        internal static string e_waitUntilSyncFinish {
+            get {
+                return ResourceManager.GetString("e_waitUntilSyncFinish", resourceCulture);
             }
         }
     }

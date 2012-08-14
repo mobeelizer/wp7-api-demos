@@ -108,8 +108,8 @@
                                         <TextBlock Text="{Binding title}" FontSize="26"/>
                                         <Image Height="25" Source="{Binding score, Converter={StaticResource ScoreToSourceConverter}}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0"/>
                                     </Grid>
-                                    <Image Grid.Column="1" Height="27" Width="35" Visibility="{Binding Conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Source="/Resources/icons/ic_sync.png" />
-                                    <TextBlock Grid.Column="2" Text="{Binding Owner}" HorizontalAlignment="Right"/>
+                                    <Image Grid.Column="1" Height="27" Width="35" Visibility="{Binding conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Source="/Resources/icons/ic_sync.png" />
+                                    <TextBlock Grid.Column="2" Text="{Binding owner}" HorizontalAlignment="Right"/>
                                 </Grid>
                             </Grid>
                         </DataTemplate>

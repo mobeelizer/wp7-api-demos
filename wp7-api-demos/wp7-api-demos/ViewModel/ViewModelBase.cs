@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using wp7_api_demos.Model;
 using Com.Mobeelizer.Mobile.Wp7;
+using Com.Mobeelizer.Mobile.Wp7.Api;
 
 namespace wp7_api_demos.ViewModel
 {
@@ -83,9 +84,16 @@ namespace wp7_api_demos.ViewModel
 
         protected void Logout(object arg)
         {
-            Mobeelizer.Logout();
-            SessionSettings.RemoveSessionCode();
-            this.navigationService.GoBackToRoot();
+            if (Mobeelizer.CheckSyncStatus().IsRunning())
+            {
+                this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotLogout);
+            }
+            else
+            {
+                Mobeelizer.Logout();
+                SessionSettings.RemoveSessionCode();
+                this.navigationService.GoBackToRoot();
+            }
         }
     }
 }

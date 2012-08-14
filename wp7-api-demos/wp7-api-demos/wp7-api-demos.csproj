@@ -295,7 +295,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.config" />
+    <Content Include="app.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
     </None>

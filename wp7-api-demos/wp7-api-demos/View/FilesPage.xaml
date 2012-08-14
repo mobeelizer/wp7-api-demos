@@ -91,7 +91,7 @@
                                         <ColumnDefinition Width="30"/>
                                     </Grid.ColumnDefinitions>
                                     <Image Height="50" Margin="5" Source="{Binding PhotoFile, Converter={StaticResource MobeelizerFileToBitmapImageConverter}}" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Owner}" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding owner}" HorizontalAlignment="Right"/>
                                 </Grid>
                             </Grid>
                         </DataTemplate>

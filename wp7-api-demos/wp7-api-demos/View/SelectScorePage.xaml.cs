@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Phone.Controls;
 using wp7_api_demos.ViewModel;
+using System.Windows;
 
 namespace wp7_api_demos.View
 {
@@ -44,7 +45,10 @@ namespace wp7_api_demos.View
 
         public void ShowMessage(string title, string message)
         {
-            throw new NotImplementedException();
+            this.Dispatcher.BeginInvoke(new System.Action(() =>
+            {
+                MessageBox.Show(message, title, MessageBoxButton.OK);
+            }));
         }
 
 
