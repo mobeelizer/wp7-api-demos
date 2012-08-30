@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010 Express for Windows Phone
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wp7-api-demos", "wp7-api-demos\wp7-api-demos.csproj", "{64CAE493-8CCE-4733-85C9-D45501380EAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wp7-sdk", "..\..\wp7-sdk\wp7-sdk\wp7-sdk.csproj", "{D914AA24-17B0-4EB1-852B-243908268CBA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{64CAE493-8CCE-4733-85C9-D45501380EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64CAE493-8CCE-4733-85C9-D45501380EAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64CAE493-8CCE-4733-85C9-D45501380EAA}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{D914AA24-17B0-4EB1-852B-243908268CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D914AA24-17B0-4EB1-852B-243908268CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D914AA24-17B0-4EB1-852B-243908268CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D914AA24-17B0-4EB1-852B-243908268CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -43,7 +43,7 @@ namespace wp7_api_demos.Model
             pushChannel = HttpNotificationChannel.Find(channelName);
             if (pushChannel == null)
             {
-                pushChannel = new HttpNotificationChannel(channelName, "cloud.mobeelizer.com");
+                pushChannel = new HttpNotificationChannel(channelName/*, "cloud.mobeelizer.com"*/);
                 pushChannel.ChannelUriUpdated += new EventHandler<NotificationChannelUriEventArgs>(PushChannel_ChannelUriUpdated);
                 pushChannel.ErrorOccurred += new EventHandler<NotificationChannelErrorEventArgs>(PushChannel_ErrorOccurred);
                 pushChannel.ShellToastNotificationReceived += new EventHandler<NotificationEventArgs>(PushChannel_ShellToastNotificationReceived);
