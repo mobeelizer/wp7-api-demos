@@ -40,10 +40,11 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
 
-
     <UserControl.Resources>
         <coding4Fun:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <convertrs:ScoreToSourceConverter x:Key="ScoreToSourceConverter"/>
+        <convertrs:OwnerToImageConverter x:Key="OwnerToImageConverter"/>
+        <convertrs:ItemBackgroungConverter x:Key="ItemBackgroungConverter"/>
     </UserControl.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -59,25 +60,34 @@
 
             <!--TitlePanel contains the name of the application and page title-->
             <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-                <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
-                <TextBlock x:Name="PageTitle" Text="conflicts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-                <Grid Background="#4C000000" Margin="0,20,0,0" Visibility="{Binding IsWarningVisable, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="Warning!" FontWeight="Bold" Style="{StaticResource PhoneTextAccentStyle}" />
-                    <Image Source="/Resources/icons/ic_sync.png" Width="35" Height="27" Margin="168,6,0,0" HorizontalAlignment="Left"/>
-                    <TextBlock Margin="10,24,0,0" Text="{Binding Path=LocalizedResources.footerWarning, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="175"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SessionCode, StringFormat='Session code: {0}'}"/>
                 </Grid>
+                <TextBlock x:Name="PageTitle" Text="conflicts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             </StackPanel>
 
             <!--ContentPanel - place additional content here-->
-            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition MaxHeight="110"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Background="#4C000000">
-                    <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
-                </Grid>
-                <ListBox Grid.Row="1" ItemsSource="{Binding Entities}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" Margin="10" >
+                <StackPanel>
+                    <Grid Background="#4C000000">
+                        <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                    </Grid>
+                    <Grid Background="#4C000000" Margin="0,20,0,0" Visibility="{Binding IsWarningVisable, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Margin="10,0,0,0" Text="Warning!" FontWeight="Bold" Foreground="#FFE40A0A" />
+                        <Image Source="/Resources/icons/ic_sync.png" Width="35" Height="27" Margin="173,6,0,0" HorizontalAlignment="Left"/>
+                        <TextBlock Margin="15,24,0,0" Text="{Binding Path=LocalizedResources.footerWarning, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap"/>
+                    </Grid>
+                </StackPanel>
+                <ListBox Grid.Row="1" ItemsSource="{Binding EntitiesViewSource.View}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" Margin="10" >
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
@@ -93,23 +103,23 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate >
-                            <Grid Margin="1" Background="#4C000000">
+                            <Grid Margin="1" Background="{Binding Converter={StaticResource ItemBackgroungConverter}}">
                                 <Grid Margin="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="30"/>
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid >
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding title}" FontSize="26"/>
-                                        <Image Height="25" Source="{Binding score, Converter={StaticResource ScoreToSourceConverter}}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                        <TextBlock Text="{Binding Title}" FontSize="26"/>
+                                        <Image Height="25" Source="{Binding Score, Converter={StaticResource ScoreToSourceConverter}}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0"/>
                                     </Grid>
-                                    <Image Grid.Column="1" Height="27" Width="35" Visibility="{Binding conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Source="/Resources/icons/ic_sync.png" />
-                                    <TextBlock Grid.Column="2" Text="{Binding owner}" HorizontalAlignment="Right"/>
+                                    <Image Grid.Column="1" Height="27" Width="35" Visibility="{Binding Conflicted, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Source="/Resources/icons/ic_sync.png" />
+                                    <Image Source="{Binding Owner, Converter={StaticResource OwnerToImageConverter}}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" />
                                 </Grid>
                             </Grid>
                         </DataTemplate>

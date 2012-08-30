@@ -8,31 +8,35 @@ namespace wp7_api_demos.Model.MobeelizerModels
     public class fileSyncEntity : MobeelizerWp7Model
     {
         [Column(IsPrimaryKey= true)]
-        public override string guid { get; set; }
+        public override string Guid { get; set; }
 
         [Column()]
-        public String photo { get; set; }
+        public override String Owner { get; set; }
+
+        [Column()]
+        public override bool Conflicted { get; set; }
+
+        [Column()]
+        public override bool Deleted { get; set; }
+
+        [Column()]
+        public override bool Modified { get; set; }
+
+        [Column()]
+        public String Photo { get; set; }
 
         public IMobeelizerFile PhotoFile
         {
             get
             {
-                return base.GetFile(photo);
+                return base.GetFile(Photo);
             }
 
             set
             {
-                this.photo = base.SetFile(value);
+                this.Photo = base.SetFile(value);
             }
         }
-
-        //public String Owner
-        //{
-        //    get
-        //    {
-        //        return base.owner;
-        //    }
-        //}
     }
 }
 

@@ -8,17 +8,21 @@ namespace wp7_api_demos.Model.MobeelizerModels
     public class simpleSyncEntity : MobeelizerWp7Model
     {
         [Column(IsPrimaryKey = true)]
-        public override string guid { get; set; }
+        public override string Guid { get; set; }
 
         [Column()]
-        public String title { get; set; }
+        public override String Owner { get; set; }
 
-        //public String Owner
-        //{
-        //    get
-        //    {
-        //       return base.owner;
-        //    }
-        //}
+        [Column()]
+        public override bool Deleted { get; set; }
+
+        [Column()]
+        public override bool Modified { get; set; }
+
+        [Column()]
+        public override bool Conflicted { get; set; }
+
+        [Column()]
+        public String Title { get; set; }
     }
 }

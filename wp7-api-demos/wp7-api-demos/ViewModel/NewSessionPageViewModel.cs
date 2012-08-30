@@ -67,7 +67,7 @@ namespace wp7_api_demos.ViewModel
                             break;
                     }
                 }
-                catch
+                catch 
                 {
                     this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
                 }

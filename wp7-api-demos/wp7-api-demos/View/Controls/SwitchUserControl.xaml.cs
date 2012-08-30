@@ -24,7 +24,8 @@ namespace wp7_api_demos.View.Controls
 
         void SwitchUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.viewModel.CurrentUser = App.CurrentUser;
+            this.viewModel.Refresh();
+            //this.viewModel.CurrentUser = App.CurrentUser;
             //throw new System.NotImplementedException();
         }
 

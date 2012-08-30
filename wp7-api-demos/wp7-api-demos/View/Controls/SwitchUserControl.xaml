@@ -9,12 +9,18 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="100" d:DesignWidth="480">
+    Height="60" Width="380">
     <UserControl.Resources>
         <converters:User2BooleanConverter x:Key="User2BooleanConverter"/>
         <converters:User2StringConverter x:Key="User2StringConverter"/>                                
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
-        <toolkit:ToggleSwitch IsChecked="{Binding CurrentUser, Mode=TwoWay, Converter={StaticResource User2BooleanConverter}}" Content="{Binding CurrentUser, Converter={StaticResource User2StringConverter}}" Header="Switch user" />
+        <Grid.ColumnDefinitions> 
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Content="User A" Style="{StaticResource UserAButtonStyle}" Margin="0,5,0,0" IsEnabled="{Binding UserAEnabled}" Command="{Binding SwitchUserCommand}" BorderThickness="0"/>
+        <Button Grid.Column="1" Content="User B" Style="{StaticResource UserBButtonStyle}" Margin="0,5,0,0" IsEnabled="{Binding UserBEnabled}" Command="{Binding SwitchUserCommand}" BorderThickness="0" Background="{x:Null}"/>
+        <!--<toolkit:ToggleSwitch IsChecked="{Binding CurrentUser, Mode=TwoWay, Converter={StaticResource User2BooleanConverter}}" Content="{Binding CurrentUser, Converter={StaticResource User2StringConverter}}" Header="Switch user" />-->
     </Grid>
 </UserControl>

@@ -107,7 +107,143 @@
     							<VisualState x:Name="Disabled"/>
     						</VisualStateGroup>
     					</VisualStateManager.VisualStateGroups>
-    					<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="12,12,0,0"/>
+    					<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="12,12,0,0" HorizontalAlignment="Left"/>
+    				</Grid>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+    <Style x:Key="UserButtonStyle" TargetType="Button">
+    	<Setter Property="Background" Value="Transparent"/>
+    	<Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+    	<Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+    	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+    	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+    	<Setter Property="Padding" Value="10,3,10,5"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="Button">
+    				<Grid x:Name="grid">
+    					<VisualStateManager.VisualStateGroups>
+    						<VisualStateGroup x:Name="CommonStates">
+    							<VisualState x:Name="Normal"/>
+    							<VisualState x:Name="MouseOver"/>
+    							<VisualState x:Name="Pressed"/>
+    							<VisualState x:Name="Disabled">
+    								<Storyboard>
+    									<DoubleAnimation Duration="0" To="34.667" Storyboard.TargetProperty="(Control.FontSize)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+    									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+    										<DiscreteObjectKeyFrame KeyTime="0">
+    											<DiscreteObjectKeyFrame.Value>
+    												<Thickness>5</Thickness>
+    											</DiscreteObjectKeyFrame.Value>
+    										</DiscreteObjectKeyFrame>
+    									</ObjectAnimationUsingKeyFrames>
+    									<ColorAnimation Duration="0" To="White" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+    								</Storyboard>
+    							</VisualState>
+    						</VisualStateGroup>
+    					</VisualStateManager.VisualStateGroups>
+    					<Border x:Name="ButtonBackground" BorderBrush="{StaticResource PhoneForegroundBrush}" Background="{x:Null}" CornerRadius="0" Margin="60,1,1,1" HorizontalAlignment="Left">
+    						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0" FontSize="21.333" VerticalAlignment="Bottom" Foreground="#FF9B9B9B"/>
+    					</Border>
+    					<Image x:Name="image" HorizontalAlignment="Left" Margin="15,15,5,5" Width="50" Source="/Resources/icons/64_users.png"/>
+    				</Grid>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+    <Style x:Key="UserAButtonStyle" TargetType="Button">
+    	<Setter Property="Background" Value="Transparent"/>
+    	<Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+    	<Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+    	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+    	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+    	<Setter Property="Padding" Value="10,3,10,5"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="Button">
+    				<Grid x:Name="grid">
+    					<VisualStateManager.VisualStateGroups>
+    						<VisualStateGroup x:Name="CommonStates">
+    							<VisualState x:Name="Normal"/>
+    							<VisualState x:Name="MouseOver"/>
+    							<VisualState x:Name="Pressed"/>
+    							<VisualState x:Name="Disabled">
+    								<Storyboard>
+    									<DoubleAnimation Duration="0" To="34.667" Storyboard.TargetProperty="(Control.FontSize)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+    									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+    										<DiscreteObjectKeyFrame KeyTime="0">
+    											<DiscreteObjectKeyFrame.Value>
+    												<Thickness>5</Thickness>
+    											</DiscreteObjectKeyFrame.Value>
+    										</DiscreteObjectKeyFrame>
+    									</ObjectAnimationUsingKeyFrames>
+    									<ColorAnimation Duration="0" To="#FFFF6E2A" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+    									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image_Copy" d:IsOptimized="True"/>
+    									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.FontWeight)" Storyboard.TargetName="ContentContainer">
+    										<DiscreteObjectKeyFrame KeyTime="0">
+    											<DiscreteObjectKeyFrame.Value>
+    												<FontWeight>Normal</FontWeight>
+    											</DiscreteObjectKeyFrame.Value>
+    										</DiscreteObjectKeyFrame>
+    									</ObjectAnimationUsingKeyFrames>
+    									<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image" d:IsOptimized="True"/>
+    								</Storyboard>
+    							</VisualState>
+    						</VisualStateGroup>
+    					</VisualStateManager.VisualStateGroups>
+    					<Border x:Name="ButtonBackground" BorderBrush="{StaticResource PhoneForegroundBrush}" Background="{x:Null}" CornerRadius="0" Margin="60,1,1,1" HorizontalAlignment="Left">
+    						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0" FontSize="21.333" VerticalAlignment="Bottom" Foreground="White"/>
+    					</Border>
+    					<Image x:Name="image" HorizontalAlignment="Left" Margin="15,15,5,5" Width="50" Source="/Resources/icons/64_users.fw.png"/>
+    					<Image x:Name="image_Copy" HorizontalAlignment="Left" Margin="5,5,0,5" Width="50" Source="/Resources/icons/64_userA.fw.png" Opacity="0"/>
+    				</Grid>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+    <Style x:Key="UserBButtonStyle" TargetType="Button">
+    	<Setter Property="Background" Value="Transparent"/>
+    	<Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+    	<Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+    	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+    	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+    	<Setter Property="Padding" Value="10,3,10,5"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="Button">
+    				<Grid x:Name="grid">
+    					<VisualStateManager.VisualStateGroups>
+    						<VisualStateGroup x:Name="CommonStates">
+    							<VisualState x:Name="Normal"/>
+    							<VisualState x:Name="MouseOver"/>
+    							<VisualState x:Name="Pressed"/>
+    							<VisualState x:Name="Disabled">
+    								<Storyboard>
+    									<DoubleAnimation Duration="0" To="34.667" Storyboard.TargetProperty="(Control.FontSize)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+    									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+    										<DiscreteObjectKeyFrame KeyTime="0">
+    											<DiscreteObjectKeyFrame.Value>
+    												<Thickness>5</Thickness>
+    											</DiscreteObjectKeyFrame.Value>
+    										</DiscreteObjectKeyFrame>
+    									</ObjectAnimationUsingKeyFrames>
+    									<ColorAnimation Duration="0" To="#FF0F6613" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+    									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image_Copy" d:IsOptimized="True"/>
+    									<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image" d:IsOptimized="True"/>
+    								</Storyboard>
+    							</VisualState>
+    						</VisualStateGroup>
+    					</VisualStateManager.VisualStateGroups>
+    					<Border x:Name="ButtonBackground" BorderBrush="{StaticResource PhoneForegroundBrush}" Background="{x:Null}" CornerRadius="0" Margin="60,1,1,1" HorizontalAlignment="Left">
+    						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0" FontSize="21.333" VerticalAlignment="Bottom" Foreground="#FF9B9B9B"/>
+    					</Border>
+    					<Image x:Name="image" HorizontalAlignment="Left" Margin="15,15,5,5" Width="50" Source="/Resources/icons/64_users.fw.png"/>
+    					<Image x:Name="image_Copy" HorizontalAlignment="Left" Margin="5,5,0,5" Width="50" Source="/Resources/icons/64_userB.fw.png" Opacity="0"/>
     				</Grid>
     			</ControlTemplate>
     		</Setter.Value>

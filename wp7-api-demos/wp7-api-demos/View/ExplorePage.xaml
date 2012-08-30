@@ -40,8 +40,173 @@
 
 
     <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
-        <Grid x:Name="LayoutRoot" Background="Transparent">
-            <controls:Panorama Title="mobeelizer">
+        <Grid x:Name="LayoutRoot" >
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <Grid Background="#4C000000">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--TitlePanel contains the name of the application and page title-->
+                <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="175"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SessionCode, StringFormat='Session code: {0}'}"/>
+                    </Grid>
+                    <TextBlock x:Name="PageTitle" Text="explore" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition MaxHeight="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Background="#19000000">
+                        <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
+                    </Grid>
+                    <ListBox Grid.Row="1" Margin="0,0,0,10" >
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <ContentPresenter
+                                            HorizontalAlignment="Stretch" 
+                                            VerticalAlignment="Stretch" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                        <Button Style="{StaticResource TileButtonStyle}" BorderThickness="0" Command="{Binding YourSessionCommand}"  >
+                                    <Grid HorizontalAlignment="Left" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Height="70"  HorizontalAlignment="Right" >
+                                            <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/64_unlock.png" Height="70" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <TextBlock Text="Your session" Grid.Column="1" VerticalAlignment="Center"  Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" BorderThickness="0" Command="{Binding AboutPageCommand}"  >
+                                    <Grid HorizontalAlignment="Left" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Height="70"  HorizontalAlignment="Right" >
+                                            <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                            <Image Source="/Resources/icons/aboutIcon.png" Height="70" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <TextBlock Text="About us" Grid.Column="1" VerticalAlignment="Center"  Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding SimpleSyncPageCommand}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                <Grid Height="70"  HorizontalAlignment="Right" >
+                                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/syncIcon.png" Height="70"  HorizontalAlignment="Right" />
+                                </Grid>
+                                <TextBlock Text="Simple sync" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding FilesPageCommand}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                <Grid Height="70"  HorizontalAlignment="Right" >
+                                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/filesIcon.png" Height="70"  HorizontalAlignment="Right" />
+                                </Grid>
+                                <TextBlock Text="Files" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding PermisionsPageCommand}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                <Grid Height="70"  HorizontalAlignment="Right" >
+                                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/permissionIcon.png" Height="70"  HorizontalAlignment="Right" />
+                                </Grid>
+                                <TextBlock Text="Permisions" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding ConflictsPageCommand}">
+
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Height="70"  HorizontalAlignment="Right" >
+                                            <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                            <Image Source="/Resources/icons/conflictsIcon.png" />
+                                        </Grid>
+                                        <TextBlock Text="Conflicts" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding RelationConflictsPageCommand}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                <Grid Height="70"  HorizontalAlignment="Right" >
+                                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/relationConflictsIcon.png" Height="70"  HorizontalAlignment="Right" />
+                                </Grid>
+                                <TextBlock Text="Relation conflicts" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding PushNotificationPageCommand}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                <Grid Height="70"  HorizontalAlignment="Right" >
+                                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/pushIcon.png" Height="70"  HorizontalAlignment="Right" />
+                                </Grid>
+                                <TextBlock Text="Push notification" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource TileButtonStyle}" Command="{Binding WhatNextPageCommand}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                <Grid Height="70"  HorizontalAlignment="Right" >
+                                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
+                                    <Image Source="/Resources/icons/whatIcon.png" Height="70"  HorizontalAlignment="Right" />
+                                </Grid>
+                                <TextBlock Text="What next" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
+                                    </Grid>
+                                </Button>
+                            </ListBox>
+                        </Grid>
+            </Grid>
+            
+            <!--    <controls:Panorama Title="mobeelizer">
                 <controls:Panorama.Background>
                     <ImageBrush ImageSource="/Resources/1440.jpg" Stretch="UniformToFill"/>
                 </controls:Panorama.Background>
@@ -108,7 +273,7 @@
                         </Button>
                     </toolkit:WrapPanel>
                 </controls:PanoramaItem>
-            </controls:Panorama>
+            </controls:Panorama>-->
         </Grid>
     </localControls:BusyIndicatorControl>
 

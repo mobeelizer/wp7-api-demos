@@ -9,6 +9,22 @@ namespace wp7_api_demos.ViewModel
     {
         private int sessionCode;
 
+        private ICommand yourSessionCommand;
+
+        public ICommand YourSessionCommand
+        {
+            get
+            {
+                if (this.yourSessionCommand == null)
+                {
+                    String sessionParam = String.Format("?SessionCode={0}", sessionCode);
+                    this.yourSessionCommand = new DelegateCommand((o) => { this.navigationService.Navigate(new Uri("/View/SessionInfoPage.xaml" + sessionParam, UriKind.Relative)); });
+                }
+
+                return this.yourSessionCommand;
+            }
+        }
+
         private ICommand aboutPageCommand;
 
         public ICommand AboutPageCommand

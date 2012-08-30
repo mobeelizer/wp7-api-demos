@@ -14,6 +14,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Com.Mobeelizer.Mobile.Wp7;
 using wp7_api_demos.Model;
+using System.Collections;
 
 namespace wp7_api_demos
 {
@@ -37,7 +38,11 @@ namespace wp7_api_demos
 
             // Standard Silverlight initialization
             InitializeComponent();
-
+            var v = (Visibility)Resources["PhoneLightThemeVisibility"];
+            if (v == Visibility.Visible)
+            {
+                this.MergeCustomColors();
+            }
             // Phone-specific initialization
             InitializePhoneApplication();
 
@@ -61,6 +66,26 @@ namespace wp7_api_demos
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+        }
+
+        private void MergeCustomColors()
+        {
+            var dictionaries = new ResourceDictionary();
+            string source = String.Format("/wp7-api-demos;component/Resources/ThemeResources.xaml");
+            var themeStyles = new ResourceDictionary { Source = new Uri(source, UriKind.Relative) };
+            dictionaries.MergedDictionaries.Add(themeStyles);
+
+
+            ResourceDictionary appResources = App.Current.Resources;
+            foreach (DictionaryEntry entry in dictionaries.MergedDictionaries[0])
+            {
+                SolidColorBrush colorBrush = entry.Value as SolidColorBrush;
+                SolidColorBrush existingBrush = appResources[entry.Key] as SolidColorBrush;
+                if (existingBrush != null && colorBrush != null)
+                {
+                    existingBrush.Color = colorBrush.Color;
+                }
+            }
         }
 
         // Code to execute when the application is launching (eg, from Start)

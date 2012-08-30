@@ -7,17 +7,26 @@ using Com.Mobeelizer.Mobile.Wp7;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using wp7_api_demos.Model;
 using wp7_api_demos.Model.MobeelizerModels;
+using System.Diagnostics;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace wp7_api_demos.ViewModel
 {
     public class SimpleSyncPageViewModel : ViewModelBase
     {
+
         public ObservableCollection<simpleSyncEntity> Entities { get; set; }
+
+        public CollectionViewSource EntitiesViewSorce { get; set; }
 
         public SimpleSyncPageViewModel(INavigationService navigationService, int sessionCode)
             : base(navigationService)
         {
             this.Entities = new ObservableCollection<simpleSyncEntity>();
+            this.EntitiesViewSorce = new CollectionViewSource();
+            this.EntitiesViewSorce.Source = this.Entities;
+            this.EntitiesViewSorce.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending)); 
             this.RefreshEntitiesList();
             this.SessionCode = sessionCode;
         }
@@ -90,7 +99,7 @@ namespace wp7_api_demos.ViewModel
         {
             Movie movie = DataUtil.GetRandomMovie();
             simpleSyncEntity entity = new simpleSyncEntity();
-            entity.title = movie.Title;
+            entity.Title = movie.Title;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
                 transaction.GetModelSet<simpleSyncEntity>().InsertOnSubmit(entity);
@@ -131,11 +140,16 @@ namespace wp7_api_demos.ViewModel
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
+                DateTime start = DateTime.Now;
                 var query = from simpleSyncEntity entity in transaction.GetModelSet<simpleSyncEntity>() select entity;
                 foreach (var entity in query)
                 {
                     this.Entities.Add(entity);
+                    String owner = entity.Owner;
                 }
+                DateTime end = DateTime.Now;
+                TimeSpan difference = (end - start);
+                Debug.WriteLine("Time is: {0} {1}", difference.Seconds, difference.Milliseconds); 
             }
         }
     }

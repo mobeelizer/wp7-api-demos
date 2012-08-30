@@ -274,4 +274,28 @@
   <data name="whatNextText1" xml:space="preserve">
     <value>Now it's time for you to code&amp;play with mobeelizer by yourself.</value>
   </data>
+  <data name="connectButton" xml:space="preserve">
+    <value>Join</value>
+  </data>
+  <data name="connectingProgressMessage" xml:space="preserve">
+    <value>Joining session</value>
+  </data>
+  <data name="createButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="createDemoSessionInfo" xml:space="preserve">
+    <value>Create a new demo session:</value>
+  </data>
+  <data name="createDemoSessionInfo2" xml:space="preserve">
+    <value>or connect to an existing one</value>
+  </data>
+  <data name="sessionInfo" xml:space="preserve">
+    <value>To connect other device to this session insert code: </value>
+  </data>
+  <data name="sessionInfo2" xml:space="preserve">
+    <value>on startup screen.</value>
+  </data>
+  <data name="sessionInfo3" xml:space="preserve">
+    <value>Remember that on each connected device you can be logged as one of two users. To switch user simply press one of two user buttons placed on top of the screen.</value>
+  </data>
 </root>

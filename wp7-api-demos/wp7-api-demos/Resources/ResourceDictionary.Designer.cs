@@ -61,6 +61,51 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Join.
+        /// </summary>
+        public static string connectButton {
+            get {
+                return ResourceManager.GetString("connectButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Joining session.
+        /// </summary>
+        public static string connectingProgressMessage {
+            get {
+                return ResourceManager.GetString("connectingProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string createButton {
+            get {
+                return ResourceManager.GetString("createButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new demo session:.
+        /// </summary>
+        public static string createDemoSessionInfo {
+            get {
+                return ResourceManager.GetString("createDemoSessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to or connect to an existing one.
+        /// </summary>
+        public static string createDemoSessionInfo2 {
+            get {
+                return ResourceManager.GetString("createDemoSessionInfo2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two users modify one record at the same time? You can easily cope with that!.
         /// </summary>
         public static string dialogConflictsSyncText1 {
@@ -519,6 +564,33 @@ namespace wp7_api_demos.Resources {
         public static string movies {
             get {
                 return ResourceManager.GetString("movies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To connect other device to this session insert code: .
+        /// </summary>
+        public static string sessionInfo {
+            get {
+                return ResourceManager.GetString("sessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to on startup screen..
+        /// </summary>
+        public static string sessionInfo2 {
+            get {
+                return ResourceManager.GetString("sessionInfo2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember that on each connected device you can be logged as one of two users. To switch user simply press one of two user buttons placed on top of the screen..
+        /// </summary>
+        public static string sessionInfo3 {
+            get {
+                return ResourceManager.GetString("sessionInfo3", resourceCulture);
             }
         }
         

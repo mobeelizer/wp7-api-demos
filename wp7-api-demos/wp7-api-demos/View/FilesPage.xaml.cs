@@ -9,6 +9,9 @@ using Microsoft.Phone.Tasks;
 using wp7_api_demos.View.Controls;
 using wp7_api_demos.View.Controls.info;
 using wp7_api_demos.ViewModel;
+using System.IO;
+using ExifLib;
+using wp7_api_demos.Model;
 
 namespace wp7_api_demos.View
 {
@@ -50,7 +53,37 @@ namespace wp7_api_demos.View
             {
                 if (e.TaskResult == TaskResult.OK)
                 {
-                    IMobeelizerFile file = Mobeelizer.CreateFile("photo", e.ChosenPhoto);
+                    JpegInfo info = ExifReader.ReadJpeg(e.ChosenPhoto, e.OriginalFileName);
+                    e.ChosenPhoto.Seek(0, SeekOrigin.Begin);
+                    ExifOrientation _orientation = info.Orientation;
+                    int _angle = 0;
+                    switch (info.Orientation)
+                    {
+                        case ExifOrientation.TopLeft:
+                        case ExifOrientation.Undefined:
+                            _angle = 0;
+                            break;
+                        case ExifOrientation.TopRight:
+                            _angle = 90;
+                            break;
+                        case ExifOrientation.BottomRight:
+                            _angle = 180;
+                            break;
+                        case ExifOrientation.BottomLeft:
+                            _angle = 270;
+                            break;
+                    }
+                  
+                    Stream capturedImage;
+                    if (_angle > 0d)
+                    {
+                        capturedImage = RotateStream(e.ChosenPhoto, _angle);
+                    }
+                    else
+                    {
+                        capturedImage = e.ChosenPhoto;
+                    }
+                    IMobeelizerFile file = Mobeelizer.CreateFile("photo", capturedImage);
                     this.getPhotoCallback(file);
                     this.getPhotoCallback = null;
                 }
@@ -125,29 +158,24 @@ namespace wp7_api_demos.View
         {
             this.getPhotoCallback = callback;
             MessagePrompt questionMessage = new MessagePrompt();
-            questionMessage.Title = "Source";
-            questionMessage.Body = "Choose source:";
-            RoundButton takePhotoButton = new RoundButton();
-            takePhotoButton.ImageSource = new BitmapImage(new Uri("/Resources/icons/photo.png", UriKind.Relative));
-            takePhotoButton.Click += (sender, args) =>
+            questionMessage.Title = "Choose source:";
+            SelectPhotoDialog dialogContent = new SelectPhotoDialog();
+            dialogContent.TakePhotoCommand = new DelegateCommand((o) =>
                 {
                     questionMessage.Hide();
                     this.photoCameraCapture.Show();
-                };
-            RoundButton selectPhotoButton = new RoundButton();
-            selectPhotoButton.ImageSource = new BitmapImage(new Uri("/Resources/icons/filesys.png", UriKind.Relative));
-            selectPhotoButton.Click += (sender, args) =>
+                });
+            dialogContent.ChosePhotoCommand = new DelegateCommand((o) =>
                 {
                     questionMessage.Hide();
                     this.photoChooserTask.Show();
-                };
-            RoundButton randomButton = new RoundButton();
-            randomButton.ImageSource = new BitmapImage(new Uri("/Resources/icons/rand.png", UriKind.Relative));
-                randomButton.Click += (sender, args) =>
+                });
+            dialogContent.RandomPhotoCommand = new DelegateCommand((o) =>
                 {
                     questionMessage.Hide();
                     callback(null);
-                };
+                });
+            questionMessage.Body = dialogContent;
             RoundButton cancelButton = new RoundButton();
             cancelButton.ImageSource = new BitmapImage(new Uri("/Resources/icons/appbar.stop.rest.png", UriKind.Relative));
             cancelButton.Click += (sender, args) =>
@@ -155,9 +183,6 @@ namespace wp7_api_demos.View
                     questionMessage.Hide();
                 };
             questionMessage.ActionPopUpButtons.Clear();
-            questionMessage.ActionPopUpButtons.Add(takePhotoButton);
-            questionMessage.ActionPopUpButtons.Add(selectPhotoButton);
-            questionMessage.ActionPopUpButtons.Add(randomButton);
             questionMessage.ActionPopUpButtons.Add(cancelButton);
             questionMessage.Show();
         }
@@ -196,6 +221,60 @@ namespace wp7_api_demos.View
             }
 
             this.NavigationService.GoBack();
+        }
+
+        private Stream RotateStream(Stream stream, int angle)
+        {
+            stream.Position = 0;
+            if (angle % 90 != 0 || angle < 0) throw new ArgumentException();
+            if (angle % 360 == 0) return stream;
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.SetSource(stream);
+            WriteableBitmap wbSource = new WriteableBitmap(bitmap);
+
+            WriteableBitmap wbTarget = null;
+            if (angle % 180 == 0)
+            {
+                wbTarget = new WriteableBitmap(wbSource.PixelWidth, wbSource.PixelHeight);
+            }
+            else
+            {
+                wbTarget = new WriteableBitmap(wbSource.PixelHeight, wbSource.PixelWidth);
+            }
+
+            for (int x = 0; x < wbSource.PixelWidth; x++)
+            {
+                for (int y = 0; y < wbSource.PixelHeight; y++)
+                {
+                    switch (angle % 360)
+                    {
+                        case 90:
+                            wbTarget.Pixels[(wbSource.PixelHeight - y - 1) + x * wbTarget.PixelWidth] = wbSource.Pixels[x + y * wbSource.PixelWidth];
+                            break;
+                        case 180:
+                            wbTarget.Pixels[(wbSource.PixelWidth - x - 1) + (wbSource.PixelHeight - y - 1) * wbSource.PixelWidth] = wbSource.Pixels[x + y * wbSource.PixelWidth];
+                            break;
+                        case 270:
+                            wbTarget.Pixels[y + (wbSource.PixelWidth - x - 1) * wbTarget.PixelWidth] = wbSource.Pixels[x + y * wbSource.PixelWidth];
+                            break;
+                    }
+                }
+            }
+            MemoryStream targetStream = new MemoryStream();
+            wbTarget.SaveJpeg(targetStream, wbTarget.PixelWidth, wbTarget.PixelHeight, 0, 100);
+            targetStream.Seek(0, SeekOrigin.Begin);
+            return targetStream;
+        }
+
+        public static JpegInfo ReadJpeg(Stream FileStream, string FileName)
+        {
+            DateTime now = DateTime.Now;
+            JpegInfo info = ExifReader.ReadJpeg(FileStream, FileName);
+            info.FileSize = (int)FileStream.Length;
+            info.FileName = string.Format("{0}.jpg", FileName);
+            info.LoadTime = (TimeSpan)(DateTime.Now - now);
+            return info;
         }
     }
 }

@@ -40,6 +40,8 @@
 
     <UserControl.Resources>
         <convertrs:EmptyFieldConverter x:Key="EmptyFielsConverter"/>
+        <convertrs:OwnerToImageConverter x:Key="OwnerToImageConverter"/>
+        <convertrs:ItemBackgroungConverter x:Key="ItemBackgroungConverter"/>
     </UserControl.Resources>
         <!--LayoutRoot is the root grid where all page content is placed-->
     <localControls:BusyIndicatorControl IsBusy="{Binding IsBusy}" BusyText="{Binding BusyMessage}" Style="{StaticResource BusyIndicatorStyle}">
@@ -54,20 +56,27 @@
 
             <!--TitlePanel contains the name of the application and page title-->
             <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-                <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="175"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SessionCode, StringFormat='Session code: {0}'}"/>
+                </Grid>
                 <TextBlock x:Name="PageTitle" Text="permisions" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             </StackPanel>
 
             <!--ContentPanel - place additional content here-->
-            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Background="#4C000000">
                     <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
                 </Grid>
-                <ListBox x:Name="entityListBox" Grid.Row="1" ItemsSource="{Binding Entities}" HorizontalAlignment="Stretch" Margin="10" >
+                <ListBox x:Name="entityListBox" Grid.Row="1" ItemsSource="{Binding EntitiesViewSorce.View}" HorizontalAlignment="Stretch" Margin="10" >
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
@@ -83,21 +92,21 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate >
-                            <Grid Background="#4C000000" Margin="1" >
+                            <Grid Background="{Binding Converter={StaticResource ItemBackgroungConverter}}" Margin="1" >
                                 <Grid Margin="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding title}" FontSize="26"/>
-                                        <TextBlock Grid.Row="1" Text="{Binding director, Converter={StaticResource EmptyFielsConverter}}" FontSize="20" Margin="10,0,0,0"/>
+                                        <TextBlock Text="{Binding Title}" FontSize="26"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding Director, Converter={StaticResource EmptyFielsConverter}}" FontSize="20" Margin="10,0,0,0"/>
                                     </Grid>
-                                    <TextBlock Grid.Column="1" Text="{Binding owner}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <Image Source="{Binding Owner, Converter={StaticResource OwnerToImageConverter}}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" />
                                 </Grid>
                             </Grid>
                         </DataTemplate>

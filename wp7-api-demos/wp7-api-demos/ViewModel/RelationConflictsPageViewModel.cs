@@ -7,6 +7,8 @@ using wp7_api_demos.Model;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using Com.Mobeelizer.Mobile.Wp7;
 using System.Linq;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace wp7_api_demos.ViewModel
 {
@@ -32,6 +34,9 @@ namespace wp7_api_demos.ViewModel
             : base(navigationService)
         {
             this.Entities = new ObservableCollection<graphsConflictsOrderEntity>();
+            this.EntitiesViewSorce = new CollectionViewSource();
+            this.EntitiesViewSorce.Source = this.Entities;
+            this.EntitiesViewSorce.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending)); 
             this.RefreshEntitiesList();
             this.SessionCode = sessionCode;
         }
@@ -52,7 +57,7 @@ namespace wp7_api_demos.ViewModel
                     if (value != null)
                     {
                         this.selectedEntity = value;
-                        this.navigationService.Navigate(new Uri(String.Format("/View/SelectStatusPage.xaml?guid={0}", this.selectedEntity.guid), UriKind.Relative));
+                        this.navigationService.Navigate(new Uri(String.Format("/View/SelectStatusPage.xaml?guid={0}", this.selectedEntity.Guid), UriKind.Relative));
                     }
                 }
             }
@@ -171,8 +176,8 @@ namespace wp7_api_demos.ViewModel
         private void OnAdd(object param)
         {
             graphsConflictsOrderEntity entity = new graphsConflictsOrderEntity();
-            entity.name = this.GetName();
-            entity.status = new Random().Next(1, 5);
+            entity.Name = this.GetName();
+            entity.Status = new Random().Next(1, 5);
             entity.AddCommand = AddItemCommand;
             entity.Items = new ObservableCollection<graphsConflictsItemEntity>();
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
@@ -186,9 +191,15 @@ namespace wp7_api_demos.ViewModel
 
         private string GetName()
         {
+            int count = 0;
+            using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
+            {
+                var query = from e in transaction.GetModelSet<graphsConflictsOrderEntity>() select e;
+                count = query.ToList().Count;
+            }
+
             String user = App.CurrentUser.ToString();
-            int number = new Random().Next(0, 99);
-            return String.Format("{0}/00{1}", user, number);
+            return String.Format("{0}/000{1}", user, count + 1);
         }
 
         private void OnAddRelation(object param)
@@ -196,8 +207,8 @@ namespace wp7_api_demos.ViewModel
             graphsConflictsOrderEntity order = param as graphsConflictsOrderEntity;
             Movie movie = DataUtil.GetRandomMovie();
             graphsConflictsItemEntity entity = new graphsConflictsItemEntity();
-            entity.title = movie.Title;
-            entity.orderGuid = order.guid;
+            entity.Title = movie.Title;
+            entity.OrderGuid = order.Guid;
             entity.RemoveCommand = RemoveItemCommand;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
@@ -259,7 +270,8 @@ namespace wp7_api_demos.ViewModel
         private void RefreshEntitiesList()
         {
             bool inConflict = false;
-            ObservableCollection<graphsConflictsOrderEntity> entities = new ObservableCollection<graphsConflictsOrderEntity>();
+            this.Entities.Clear();
+            
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
@@ -267,10 +279,10 @@ namespace wp7_api_demos.ViewModel
                 foreach (var entity in query)
                 {
                     entity.Items = new ObservableCollection<graphsConflictsItemEntity>();
-                    var relationQuery = from graphsConflictsItemEntity r in transaction.GetModelSet<graphsConflictsItemEntity>() where r.orderGuid == entity.guid select r;
+                    var relationQuery = from graphsConflictsItemEntity r in transaction.GetModelSet<graphsConflictsItemEntity>() where r.OrderGuid == entity.Guid select r;
                     foreach (var relation in relationQuery)
                     {
-                        if (relation.conflicted)
+                        if (relation.Conflicted)
                         {
                             inConflict = true;
                         }
@@ -278,13 +290,13 @@ namespace wp7_api_demos.ViewModel
                         entity.Items.Add(relation);
                     }
 
-                    if (entity.conflicted)
+                    if (entity.Conflicted)
                     {
                         inConflict = true;
                     }
 
                     entity.AddCommand = AddItemCommand;
-                    entities.Add(entity);
+                    Entities.Add(entity);
                 }
             }
 
@@ -292,9 +304,8 @@ namespace wp7_api_demos.ViewModel
             {
                 IsWarningVisable = inConflict;
             }
-
-            this.Entities.Clear();
-            this.Entities = entities;
         }
+
+        public CollectionViewSource EntitiesViewSorce { get; set; }
     }
 }

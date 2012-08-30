@@ -18,8 +18,8 @@ namespace wp7_api_demos.ViewModel
                 int? sessionCode = SessionSettings.GetSessionCode();
                 if (sessionCode != null)
                 {
-                    this.SessionCode = sessionCode.Value;
-                    this.ConnectToSessionCommand.Execute(null);
+                    this.SessionCode = sessionCode.Value.ToString();
+                    this.ConnectToExistingSession();
                 }
             }
         }
@@ -32,17 +32,24 @@ namespace wp7_api_demos.ViewModel
             }
         }
 
-        public ICommand ConnectToSessionCommand
+        private DelegateCommand connectToSessionCommand;
+
+        public DelegateCommand ConnectToSessionCommand
         {
             get
             {
-                return new DelegateCommand(this.ConnectToExistingSession);
+                if (this.connectToSessionCommand == null)
+                {
+                    this.connectToSessionCommand = new DelegateCommand(this.ConnectToExistingSession, (arg) => { return !String.IsNullOrWhiteSpace(this.SessionCode); });
+                }
+
+                return this.connectToSessionCommand;
             }
         }
 
-        private int sessionCode;
+        private String sessionCode;
 
-        public int SessionCode
+        public String SessionCode
         {
             get
             {
@@ -51,16 +58,27 @@ namespace wp7_api_demos.ViewModel
 
             set
             {
-                this.sessionCode = value;
+                int intValue;
+                if (Int32.TryParse(value, out intValue))
+                {
+                    this.sessionCode = value;
+                }
+                else
+                {
+                    this.sessionCode = null;
+                }
+                
                 Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         this.RaisePropertyChanged("SessionCode");
+                        ConnectToSessionCommand.RaiseCanExecuteChanged();
                     }));
             }
         }
 
         private void CreateNewSession(object arg)
         {
+            PageSettings.ResetSettings();
             this.BusyMessage = "Creating new demo session...";
             this.IsBusy = true;
 
@@ -73,51 +91,54 @@ namespace wp7_api_demos.ViewModel
                     }
                     else
                     {
-                        this.SessionCode = Int32.Parse(sessionCode);
-                        SessionSettings.SaveSessionCode(this.SessionCode);
-                        Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-                            {
-                                ConnectToExistingSession(null);
-                            }));
+                        this.SessionCode = sessionCode;
+                        SessionSettings.SaveSessionCode(Int32.Parse(this.SessionCode));
+                        navigationService.Navigate(new Uri(String.Format("/View/NewSessionPage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
                     }
                 });
             createTask.Execute();
         }
 
-        private void ConnectToExistingSession(object arg)
+        private void ConnectToExistingSession()
         {
             this.BusyMessage = "Logging in...";
             this.IsBusy = true;
             App.CurrentUser = User.A;
             Mobeelizer.Login(SessionCode.ToString(), Resources.Config.c_userALogin, Resources.Config.c_userAPassword, (result) =>
+            {
+                this.IsBusy = false;
+                try
                 {
-                    this.IsBusy = false;
-                    try
+                    var status = result.GetLoginStatus();
+                    switch (status)
                     {
-                        var status = result.GetLoginStatus();
-                        switch (status)
-                        {
-                            case MobeelizerLoginStatus.OK:
-                                App.CurrentUser = User.A;
-                                SessionSettings.SaveSessionCode(this.SessionCode);
-                                PushNotificationService.Instance.PerformUserRegistration();
-                               navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
-                             break;
-                            case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
-                                this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
-                                break;
-                            case MobeelizerLoginStatus.CONNECTION_FAILURE:
-                            case MobeelizerLoginStatus.AUTHENTICATION_FAILURE:
-                            case MobeelizerLoginStatus.OTHER_FAILURE:
-                                this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
-                                break;
-                        }
+                        case MobeelizerLoginStatus.OK:
+                            App.CurrentUser = User.A;
+                            SessionSettings.SaveSessionCode(Int32.Parse(this.SessionCode));
+                            PushNotificationService.Instance.PerformUserRegistration();
+                            navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
+                            break;
+                        case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
+                            this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
+                            break;
+                        case MobeelizerLoginStatus.CONNECTION_FAILURE:
+                        case MobeelizerLoginStatus.AUTHENTICATION_FAILURE:
+                        case MobeelizerLoginStatus.OTHER_FAILURE:
+                            this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
+                            break;
                     }
-                    catch
-                    {
-                        this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
-                    }
-                });
+                }
+                catch
+                {
+                    this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
+                }
+            });
+        }
+
+        private void ConnectToExistingSession(object arg)
+        {
+            PageSettings.ResetSettings();
+            this.ConnectToExistingSession();
         }
     }
 }

@@ -11,31 +11,27 @@ namespace wp7_api_demos.Model.MobeelizerModels
     public class graphsConflictsOrderEntity : MobeelizerWp7Model
     {
         [Column(IsPrimaryKey = true)]
-        public override string guid { get; set; }
+        public override string Guid { get; set; }
 
         [Column()]
-        public String name { get; set; }
+        public override String Owner { get; set; }
 
         [Column()]
-        public int status { get; set; }
+        public override bool Conflicted { get; set; }
+
+        [Column()]
+        public override bool Deleted { get; set; }
+
+        [Column()]
+        public override bool Modified { get; set; }
+
+        [Column()]
+        public String Name { get; set; }
+
+        [Column()]
+        public int Status { get; set; }
 
         public ObservableCollection<graphsConflictsItemEntity> Items { get; set; }
-
-        //public bool Conflicted
-        //{
-        //    get
-        //    {
-        //        return base.conflicted;
-        //    }
-        //}
-
-        //public String Owner
-        //{
-        //    get
-        //    {
-        //        return base.owner;
-        //    }
-        //}
 
         public ICommand AddCommand { get; set; }
     }

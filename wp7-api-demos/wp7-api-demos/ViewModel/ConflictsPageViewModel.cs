@@ -8,6 +8,8 @@ using Com.Mobeelizer.Mobile.Wp7.Api;
 using Com.Mobeelizer.Mobile.Wp7;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows.Data;
+using System.ComponentModel;
 
 
 namespace wp7_api_demos.ViewModel
@@ -33,7 +35,10 @@ namespace wp7_api_demos.ViewModel
         public ConflictsPageViewModel(INavigationService navigationService, int sessionCode)
             : base(navigationService)
         {
+            this.EntitiesViewSource = new CollectionViewSource();
             this.Entities = new ObservableCollection<conflictsEntity>();
+            this.EntitiesViewSource.Source = this.Entities;
+            this.EntitiesViewSource.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending)); 
             this.RefreshEntitiesList();
             this.SessionCode = sessionCode;
         }
@@ -54,7 +59,7 @@ namespace wp7_api_demos.ViewModel
                     if (value != null)
                     {
                         this.selectedEntity = value;
-                        this.navigationService.Navigate(new Uri(String.Format("/View/SelectScorePage.xaml?guid={0}", this.selectedEntity.guid), UriKind.Relative));
+                        this.navigationService.Navigate(new Uri(String.Format("/View/SelectScorePage.xaml?guid={0}", this.selectedEntity.Guid), UriKind.Relative));
                     }
                 }
             }
@@ -144,8 +149,8 @@ namespace wp7_api_demos.ViewModel
         {
             Movie movie = DataUtil.GetRandomMovie();
             conflictsEntity entity = new conflictsEntity();
-            entity.title = movie.Title;
-            entity.score = movie.Rating;
+            entity.Title = movie.Title;
+            entity.Score = movie.Rating;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
                 transaction.GetModelSet<conflictsEntity>().InsertOnSubmit(entity);
@@ -182,20 +187,20 @@ namespace wp7_api_demos.ViewModel
 
         private void RefreshEntitiesList()
         {
+            this.Entities.Clear();
             bool inConflict = false;
-            ObservableCollection<conflictsEntity> entities = new ObservableCollection<conflictsEntity>();
             var database = Mobeelizer.GetDatabase();
             using (var transaction = database.BeginTransaction())
             {
                 var query = from conflictsEntity entity in transaction.GetModelSet<conflictsEntity>() select entity;
                 foreach (var entity in query)
                 {
-                    if (entity.conflicted)
+                    if (entity.Conflicted)
                     {
                         inConflict = true;
                     }
 
-                    entities.Add(entity);
+                    Entities.Add(entity);
                 }
             }
             
@@ -203,9 +208,8 @@ namespace wp7_api_demos.ViewModel
             {
                 IsWarningVisable = inConflict;
             }
-
-            this.Entities.Clear();
-            this.Entities = entities;
         }
+
+        public CollectionViewSource EntitiesViewSource { get; set; }
     }
 }

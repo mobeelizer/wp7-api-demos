@@ -7,6 +7,8 @@ using Com.Mobeelizer.Mobile.Wp7;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using wp7_api_demos.Model;
 using wp7_api_demos.Model.MobeelizerModels;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace wp7_api_demos.ViewModel
 {
@@ -18,6 +20,9 @@ namespace wp7_api_demos.ViewModel
             : base(navigationService)
         {
             this.Entities = new ObservableCollection<permissionsEntity>();
+            this.EntitiesViewSorce = new CollectionViewSource();
+            this.EntitiesViewSorce.Source = this.Entities;
+            this.EntitiesViewSorce.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending)); 
             this.SessionCode = sessionCode;
             this.RefreshEntitiesList();
         }
@@ -90,8 +95,8 @@ namespace wp7_api_demos.ViewModel
         {
             Movie movie = DataUtil.GetRandomMovie();
             permissionsEntity entity = new permissionsEntity();
-            entity.title = movie.Title;
-            entity.director = movie.Director;
+            entity.Title = movie.Title;
+            entity.Director = movie.Director;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
                 transaction.GetModelSet<permissionsEntity>().InsertOnSubmit(entity);
@@ -139,5 +144,7 @@ namespace wp7_api_demos.ViewModel
                 }
             }
         }
+
+        public CollectionViewSource EntitiesViewSorce { get; set; }
     }
 }

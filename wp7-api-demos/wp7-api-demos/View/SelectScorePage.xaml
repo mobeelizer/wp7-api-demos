@@ -42,13 +42,13 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" >
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle2Style}"/>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedOption, Mode=TwoWay}">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Options}" >
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Template">
@@ -64,9 +64,9 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid >
-                        <Image Source="{Binding Converter={StaticResource ScoreToSourceConverter}}" HorizontalAlignment="Center" Height="50"/>
-                    </Grid>
+                    <Button Height="100" Command="{Binding Command}" CommandParameter="{Binding Score}">
+                        <Image Source="{Binding Score, Converter={StaticResource ScoreToSourceConverter}}" HorizontalAlignment="Center" Height="50"/>
+                    </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

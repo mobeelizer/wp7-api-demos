@@ -138,7 +138,7 @@ namespace wp7_api_demos.ViewModel
 
         private void OnSync(object param)
         {
-            this.BusyMessage = "Synchronizing";
+            this.BusyMessage = "Synchronizing"; 
             this.IsBusy = true;
             Mobeelizer.Sync((result) =>
             {

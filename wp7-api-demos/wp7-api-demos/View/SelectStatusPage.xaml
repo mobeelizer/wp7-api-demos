@@ -41,13 +41,13 @@
         <converters:StatusCodeToNameConverter x:Key="StatusCodeToNameConverter"/>
     </phone:PhoneApplicationPage.Resources>
     
-    <Grid x:Name="LayoutRoot" >
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Title,StringFormat='Order {0}'}" Style="{StaticResource PhoneTextTitle2Style}"/>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedOption, Mode=TwoWay}" Margin="10">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Options}" Margin="10">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Template">
@@ -63,14 +63,16 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding Converter={StaticResource StatusToImageConverter}}"  Height="33"/>
-                        <TextBlock Margin="10,5,5,5" Text="{Binding Converter={StaticResource StatusCodeToNameConverter}}" Grid.Column="1"/>
-                    </Grid>
+                    <Button Command="{Binding Command}" Height="100" CommandParameter="{Binding Status}">
+                        <Grid  Width="230">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Status, Converter={StaticResource StatusToImageConverter}}"  Height="30" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,0,0,0" Text="{Binding Status,Converter={StaticResource StatusCodeToNameConverter}}" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

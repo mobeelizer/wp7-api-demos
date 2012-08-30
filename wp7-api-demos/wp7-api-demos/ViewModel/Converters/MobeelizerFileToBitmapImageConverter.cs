@@ -20,7 +20,8 @@ namespace wp7_api_demos.ViewModel.Converters
         {
             IMobeelizerFile file = value as IMobeelizerFile;
             BitmapImage bitmap = new BitmapImage();
-            bitmap.CreateOptions = BitmapCreateOptions.None;
+            
+            bitmap.CreateOptions = BitmapCreateOptions.BackgroundCreation;
             using (var stream = file.GetStream())
             {
                 bitmap.SetSource(stream);

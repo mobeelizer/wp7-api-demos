@@ -50,15 +50,22 @@
 
                 <!--TitlePanel contains the name of the application and page title-->
                 <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="175"/>
+                    </Grid.ColumnDefinitions>
                     <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBlock x:Name="PageTitle" Text="push notifications" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SessionCode, StringFormat='Session code: {0}'}"/>
+                </Grid>
+                <TextBlock x:Name="PageTitle" Text="push notifications" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
                 </StackPanel>
 
                 <!--ContentPanel - place additional content here-->
             <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1">
-                <Grid x:Name="ContentPanel"  Margin="12,0,12,0">
+                <Grid x:Name="ContentPanel"  Margin="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="60"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Background="#4C000000">

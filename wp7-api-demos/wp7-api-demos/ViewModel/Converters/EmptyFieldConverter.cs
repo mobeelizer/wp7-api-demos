@@ -9,7 +9,7 @@ namespace wp7_api_demos.ViewModel.Converters
         {
             String stringValue = value as String;
             if(String.IsNullOrEmpty(stringValue))
-                return "#############";
+                return "*************";
             else 
                 return value;
         }

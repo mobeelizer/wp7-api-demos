@@ -39,6 +39,7 @@
 
     <phone:PhoneApplicationPage.Resources>
         <converters:OwnerToImageConverter x:Key="OwnerToImageConverter"/>
+        <converters:ItemBackgroungConverter x:Key="ItemBackgroungConverter"/>
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -54,20 +55,27 @@
 
             <!--TitlePanel contains the name of the application and page title-->
             <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-                <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="175"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SessionCode, StringFormat='Session code: {0}'}"/>
+                </Grid>
                 <TextBlock x:Name="PageTitle" Text="simple sync" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             </StackPanel>
 
             <!--ContentPanel - place additional content here-->
-            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Background="#4C000000">
+                <Grid   Background="#4C000000">
                     <localControls:SwitchUserControl UserSwitchedCommand="{Binding UserSwitchedCommand}" SwitchingUserCommand="{Binding SwitchingUserCommand}" SessionCode="{Binding SessionCode}"/>
                 </Grid>
-                <ListBox Margin="5" x:Name="entityListBox" Grid.Row="1" ItemsSource="{Binding Entities}" >
+                <ListBox Margin="5" x:Name="entityListBox" Grid.Row="1" ItemsSource="{Binding EntitiesViewSorce.View}" >
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
@@ -83,14 +91,14 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate >
-                            <Grid Background="#4C000000" Margin="1" >
+                            <Grid Background="{Binding Converter={StaticResource ItemBackgroungConverter}}" Margin="1" >
                                 <Grid Margin="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding title}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding owner}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Title}" VerticalAlignment="Center"/>
+                                    <Image Source="{Binding Owner, Converter={StaticResource OwnerToImageConverter}}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" />
                                 </Grid>
                             </Grid>
                         </DataTemplate>

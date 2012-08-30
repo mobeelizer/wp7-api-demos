@@ -38,35 +38,20 @@ namespace wp7_api_demos.Model
 
         public void RegisterForRemoteNotification()
         {
-
-            //Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-            //{
-            //    MessageBox.Show("Register ");
-            //}));
-
             HttpNotificationChannel pushChannel;
             string channelName = "wp7-api-demos-rawNotificationChannel";
             pushChannel = HttpNotificationChannel.Find(channelName);
             if (pushChannel == null)
             {
-                pushChannel = new HttpNotificationChannel(channelName);
+                pushChannel = new HttpNotificationChannel(channelName, "cloud.mobeelizer.com");
                 pushChannel.ChannelUriUpdated += new EventHandler<NotificationChannelUriEventArgs>(PushChannel_ChannelUriUpdated);
                 pushChannel.ErrorOccurred += new EventHandler<NotificationChannelErrorEventArgs>(PushChannel_ErrorOccurred);
                 pushChannel.ShellToastNotificationReceived += new EventHandler<NotificationEventArgs>(PushChannel_ShellToastNotificationReceived);
                 pushChannel.Open();
                 pushChannel.BindToShellToast();
-
-                //Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-                //{
-                //    MessageBox.Show("new one ");
-                //}));
             }
             else
             {
-                //Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-                //{
-                //    MessageBox.Show("already registred");
-                //}));
                 pushChannel.ChannelUriUpdated += new EventHandler<NotificationChannelUriEventArgs>(PushChannel_ChannelUriUpdated);
                 pushChannel.ErrorOccurred += new EventHandler<NotificationChannelErrorEventArgs>(PushChannel_ErrorOccurred);
                 pushChannel.ShellToastNotificationReceived += new EventHandler<NotificationEventArgs>(PushChannel_ShellToastNotificationReceived);
@@ -76,10 +61,6 @@ namespace wp7_api_demos.Model
 
         private  void PushChannel_ChannelUriUpdated(object sender, NotificationChannelUriEventArgs e)
         {
-            //Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-            //    {
-            //        MessageBox.Show("Channel updated " + e.ChannelUri);
-            //    }));
             userARegistred = false;
             userBRegistred = false;
             channelUri = e.ChannelUri.ToString();
@@ -98,10 +79,6 @@ namespace wp7_api_demos.Model
 
         private void PushChannel_ErrorOccurred(object sender, NotificationChannelErrorEventArgs e)
         {
-            //Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-            //{
-            //    MessageBox.Show("Error: " + e.Message);
-            //}));
             channelUri = null;
             Mobeelizer.UnregisterForRemoteNotifications((result) => { });
         }
@@ -111,19 +88,18 @@ namespace wp7_api_demos.Model
             Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
                 ToastPrompt toast = new ToastPrompt();
-                toast.Title = "Push received!";
-                toast.Message = e.Collection["Text2"];
+                try
+                {
+                    toast.Title = e.Collection["Text1"];
+                    toast.Message = e.Collection["Text2"];
+                }
+                catch{}
                 toast.Show();
             }));
         }
 
         public void PerformUserRegistration()
         {
-            //Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-            //{
-            //    MessageBox.Show("Perform user registration");
-            //}));
-
             switch (App.CurrentUser)
             {
                 case User.A:

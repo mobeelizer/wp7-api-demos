@@ -4,6 +4,8 @@ using System.Linq;
 using Com.Mobeelizer.Mobile.Wp7;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using wp7_api_demos.Model.MobeelizerModels;
+using System.Windows.Input;
+using wp7_api_demos.Model;
 
 namespace wp7_api_demos.ViewModel
 {
@@ -13,53 +15,57 @@ namespace wp7_api_demos.ViewModel
 
         public String Title { get; set; }
 
-        public ObservableCollection<int> Options { get; private set; }
+        public ObservableCollection<ListOption> Options { get; private set; }
 
         public SelectScorePageViewModel(INavigationService navigationService, String modelGuid)
             : base(navigationService)
         {
+            ICommand selectCommand = new DelegateCommand(ScoreSelected);
             this.modelGuid = modelGuid;
             using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
             {
-                var query = from conflictsEntity e in transaction.GetModelSet<conflictsEntity>() where e.guid == modelGuid select e;
+                var query = from conflictsEntity e in transaction.GetModelSet<conflictsEntity>() where e.Guid == modelGuid select e;
                 conflictsEntity entity = query.Single();
-                this.Title = entity.title;
+                this.Title = entity.Title;
             }
 
-            this.Options = new ObservableCollection<int>();
+            this.Options = new ObservableCollection<ListOption>();
             for(int i = 1; i<6; ++i)
             {
-                this.Options.Add(i);
+                this.Options.Add(new ListOption() { Score = i, Command = selectCommand });
             }
         }
 
-        public int SelectedOption
+        
+
+        private void ScoreSelected(object arg)
         {
-            get
+            int value = (int)arg;
+            if (Mobeelizer.CheckSyncStatus().IsRunning())
             {
-                return -1;
+                navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_waitUntilSyncFinish);
             }
-
-            set
+            else
             {
-                if (Mobeelizer.CheckSyncStatus().IsRunning())
+                using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
                 {
-                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_waitUntilSyncFinish);
-                }
-                else
-                {
-                    using (var transaction = Mobeelizer.GetDatabase().BeginTransaction())
-                    {
-                        var query = from conflictsEntity e in transaction.GetModelSet<conflictsEntity>() where e.guid == modelGuid select e;
-                        conflictsEntity entity = query.Single();
+                    var query = from conflictsEntity e in transaction.GetModelSet<conflictsEntity>() where e.Guid == modelGuid select e;
+                    conflictsEntity entity = query.Single();
 
-                        entity.score = value;
-                        transaction.SubmitChanges();
-                    }
-
-                    this.navigationService.GoBack();
+                    entity.Score = value;
+                    transaction.SubmitChanges();
                 }
+
+                this.navigationService.GoBack();
             }
+        }
+
+        public class ListOption
+        {
+            public ICommand Command { get; set; }
+
+            public int Score { get; set; }
         }
     }
+
 }
