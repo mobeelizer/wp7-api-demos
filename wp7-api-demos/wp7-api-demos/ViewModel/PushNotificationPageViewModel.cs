@@ -67,21 +67,18 @@ namespace wp7_api_demos.ViewModel
 
         private void UserSwitched(object arg)
         {
-            MobeelizerLoginStatus status = (MobeelizerLoginStatus)arg;
-            switch (status)
+            MobeelizerOperationError error = (MobeelizerOperationError)arg;
+            if (error == null)
             {
-                case MobeelizerLoginStatus.OK:
-                    this.IsBusy = false;
-                    break;
-                case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
-                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
-                    break;
-                default:
-                case MobeelizerLoginStatus.AUTHENTICATION_FAILURE:
-                case MobeelizerLoginStatus.CONNECTION_FAILURE:
-                case MobeelizerLoginStatus.OTHER_FAILURE:
-                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
-                    break;
+                this.IsBusy = false;
+            }
+            else if (error.Code == "missingConnection")
+            {
+                navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
+            }
+            else
+            {
+                navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
             }
         }
 
@@ -102,10 +99,10 @@ namespace wp7_api_demos.ViewModel
             notification.Add("Text2", "Wp7 device greets all users.");
             notification.Add("Param", "/View/MainPage.xaml");
             notification.Add("alert", "Wp7 device greets all users.");
-            Mobeelizer.SendRemoteNotification(notification, (result) =>
+            Mobeelizer.SendRemoteNotification(notification, (error) =>
                 {
                     this.IsBusy = false;
-                    if (result.GetCommunicationStatus() == MobeelizerCommunicationStatus.FAILURE)
+                    if (error != null)
                     {
                         this.navigationService.ShowMessage(Resources.Errors.e_title, "Unable to send push notification.");
                     }
@@ -126,10 +123,10 @@ namespace wp7_api_demos.ViewModel
             IList<String> users = new List<String>();
             users.Add("A");
             
-            Mobeelizer.SendRemoteNotificationToUsers(notification,users, (result) =>
+            Mobeelizer.SendRemoteNotificationToUsers(notification,users, (error) =>
             {
                 this.IsBusy = false;
-                if (result.GetCommunicationStatus() == MobeelizerCommunicationStatus.FAILURE)
+                if (error != null)
                 {
                     this.navigationService.ShowMessage(Resources.Errors.e_title, "Unable to send push notification.");
                 }
@@ -149,10 +146,10 @@ namespace wp7_api_demos.ViewModel
             notification.Add("alert", "Wp7 device greets user B.");
             IList<String> users = new List<String>();
             users.Add("B");
-            Mobeelizer.SendRemoteNotificationToUsers(notification, users, (result) =>
+            Mobeelizer.SendRemoteNotificationToUsers(notification, users, (error) =>
             {
                 this.IsBusy = false;
-                if (result.GetCommunicationStatus() == MobeelizerCommunicationStatus.FAILURE)
+                if (error != null)
                 {
                     this.navigationService.ShowMessage(Resources.Errors.e_title, "Unable to send push notification.");
                 }

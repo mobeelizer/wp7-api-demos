@@ -64,9 +64,9 @@ namespace wp7_api_demos.Model
             userARegistred = false;
             userBRegistred = false;
             channelUri = e.ChannelUri.ToString();
-            Mobeelizer.RegisterForRemoteNotifications(channelUri, (result) =>
+            Mobeelizer.RegisterForRemoteNotifications(channelUri, (error) =>
                 {
-                    if (result.GetCommunicationStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCommunicationStatus.SUCCESS)
+                    if (error == null)
                     {
                         if (App.CurrentUser == User.A)
                             userARegistred = true;
@@ -100,32 +100,14 @@ namespace wp7_api_demos.Model
 
         public void PerformUserRegistration()
         {
-            switch (App.CurrentUser)
+            if (channelUri != null)
             {
-                case User.A:
-                    if (!userARegistred && channelUri != null)
+                Mobeelizer.RegisterForRemoteNotifications(channelUri, (error) =>
+                {
+                    if (error == null)
                     {
-                        Mobeelizer.RegisterForRemoteNotifications(channelUri, (result) =>
-                        {
-                            if (result.GetCommunicationStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCommunicationStatus.SUCCESS)
-                            {
-                                userARegistred = true;
-                            }
-                        });
                     }
-                    break;
-                case User.B:
-                    if (!userBRegistred && channelUri != null)
-                    {
-                        Mobeelizer.RegisterForRemoteNotifications(channelUri, (result) =>
-                        {
-                            if (result.GetCommunicationStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCommunicationStatus.SUCCESS)
-                            {
-                                userARegistred = true;
-                            }
-                        });
-                    }
-                    break;
+                });
             }
         }
     }

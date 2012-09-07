@@ -66,73 +66,29 @@ namespace wp7_api_demos.ViewModel
                         password = Resources.Config.c_userBPassword;
                         break;
                 }
-                Mobeelizer.Login(SessionCode.ToString(), user, password, (result) =>
-                {
-                    if (result.GetLoginStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.OK)
+                Mobeelizer.UnregisterForRemoteNotifications(e =>
                     {
-                        App.CurrentUser = value;
-                        PushNotificationService.Instance.PerformUserRegistration();
-                        Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        Mobeelizer.Login(SessionCode.ToString(), user, password, (error) =>
                         {
-                            this.RaisePropertyChanged("UserAEnabled");
-                            this.RaisePropertyChanged("UserBEnabled");
-                        }));
-                    }
-
-                    this.UserSwitchedCommand.Execute(result.GetLoginStatus());
-                });
-            }
-            else
-            {
-                this.RaisePropertyChanged("UserAEnabled");
-                this.RaisePropertyChanged("UserBEnabled");
-            }
-        }
-
-        public User CurrentUser
-        {
-            get
-            {
-                return App.CurrentUser;
-            }
-
-            set
-            {
-                if (App.CurrentUser != value && !Mobeelizer.CheckSyncStatus().IsRunning())
-                {
-                    this.SwitchingUserCommand.Execute(null);
-                    String user = String.Empty;
-                    String password = String.Empty;
-                    switch (value)
-                    {
-                        case User.A:
-                            user = Resources.Config.c_userALogin;
-                            password = Resources.Config.c_userAPassword;
-                            break;
-                        case User.B:
-                            user = Resources.Config.c_userBLogin;
-                            password = Resources.Config.c_userBPassword;
-                            break;
-                    }
-                    Mobeelizer.Login(SessionCode.ToString(), user, password, (result) =>
-                        {
-                            if (result.GetLoginStatus() == Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.OK)
+                            if (error == null)
                             {
                                 App.CurrentUser = value;
                                 PushNotificationService.Instance.PerformUserRegistration();
                                 Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
                                 {
-                                    this.RaisePropertyChanged("CurrentUser");
+                                    this.RaisePropertyChanged("UserAEnabled");
+                                    this.RaisePropertyChanged("UserBEnabled");
                                 }));
                             }
 
-                            this.UserSwitchedCommand.Execute(result.GetLoginStatus());
+                            this.UserSwitchedCommand.Execute(error);
                         });
-                }
-                else
-                {
-                    this.RaisePropertyChanged("CurrentUser");
-                }
+                    });
+            }
+            else
+            {
+                this.RaisePropertyChanged("UserAEnabled");
+                this.RaisePropertyChanged("UserBEnabled");
             }
         }
 

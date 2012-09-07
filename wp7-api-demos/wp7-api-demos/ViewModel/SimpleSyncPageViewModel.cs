@@ -67,25 +67,22 @@ namespace wp7_api_demos.ViewModel
 
         private void UserSwitched(object arg)
         {
-            MobeelizerLoginStatus status = (MobeelizerLoginStatus)arg;
-            switch (status)
+            MobeelizerOperationError error = (MobeelizerOperationError)arg;
+            if (error == null)
             {
-                case MobeelizerLoginStatus.OK:
-                    this.IsBusy = false;
-                    Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            this.RefreshEntitiesList();
-                        }));
-                    break;
-                case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
-                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
-                    break;
-                default:
-                case MobeelizerLoginStatus.AUTHENTICATION_FAILURE:
-                case MobeelizerLoginStatus.CONNECTION_FAILURE:
-                case MobeelizerLoginStatus.OTHER_FAILURE:
-                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
-                    break;
+                this.IsBusy = false;
+                Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.RefreshEntitiesList();
+                }));
+            }
+            else if (error.Code == "missingConnection")
+            {
+                navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
+            }
+            else
+            {
+                navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
             }
         }
 
@@ -113,23 +110,19 @@ namespace wp7_api_demos.ViewModel
         {
             this.BusyMessage = "Synchronizing";
             this.IsBusy = true;
-            Mobeelizer.Sync((result) =>
+            Mobeelizer.Sync((error) =>
             {
                 this.IsBusy = false;
-                switch (result.GetSyncStatus())
+                if (error == null)
                 {
-                    case MobeelizerSyncStatus.FINISHED_WITH_SUCCESS:
-                        Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
-                            {
-                                this.RefreshEntitiesList();
-                            }));
-                        break;
-                    case MobeelizerSyncStatus.FINISHED_WITH_FAILURE:
-                        navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_syncFailed);
-                        break;
-                    case MobeelizerSyncStatus.NONE:
-                        navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_syncDisabled);
-                        break;
+                    Deployment.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            this.RefreshEntitiesList();
+                        }));
+                }
+                else
+                {
+                    navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_syncFailed);
                 }
             });
         }

@@ -6,6 +6,9 @@ using Com.Mobeelizer.Mobile.Wp7;
 using Com.Mobeelizer.Mobile.Wp7.Api;
 using System.Windows;
 using System.IO.IsolatedStorage;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.IO;
 
 namespace wp7_api_demos.ViewModel
 {
@@ -104,28 +107,25 @@ namespace wp7_api_demos.ViewModel
             this.BusyMessage = "Logging in...";
             this.IsBusy = true;
             App.CurrentUser = User.A;
-            Mobeelizer.Login(SessionCode.ToString(), Resources.Config.c_userALogin, Resources.Config.c_userAPassword, (result) =>
+            Mobeelizer.Login(SessionCode.ToString(), Resources.Config.c_userALogin, Resources.Config.c_userAPassword, (error) =>
             {
                 this.IsBusy = false;
                 try
                 {
-                    var status = result.GetLoginStatus();
-                    switch (status)
+                    if (error == null)
                     {
-                        case MobeelizerLoginStatus.OK:
-                            App.CurrentUser = User.A;
-                            SessionSettings.SaveSessionCode(Int32.Parse(this.SessionCode));
-                            PushNotificationService.Instance.PerformUserRegistration();
-                            navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
-                            break;
-                        case MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE:
-                            this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
-                            break;
-                        case MobeelizerLoginStatus.CONNECTION_FAILURE:
-                        case MobeelizerLoginStatus.AUTHENTICATION_FAILURE:
-                        case MobeelizerLoginStatus.OTHER_FAILURE:
-                            this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
-                            break;
+                        App.CurrentUser = User.A;
+                        SessionSettings.SaveSessionCode(Int32.Parse(this.SessionCode));
+                        PushNotificationService.Instance.PerformUserRegistration();
+                        navigationService.Navigate(new Uri(String.Format("/View/ExplorePage.xaml?SessionCode={0}", this.SessionCode), UriKind.Relative));
+                    }
+                    else if (error.Code == "missingConnection")
+                    {
+                        this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_missingConnection);
+                    }
+                    else
+                    {
+                        this.navigationService.ShowMessage(Resources.Errors.e_title, Resources.Errors.e_cannotConnectToSession);
                     }
                 }
                 catch
