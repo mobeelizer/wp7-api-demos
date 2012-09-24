@@ -4,6 +4,92 @@
         <name>wp7-sdk</name>
     </assembly>
     <members>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential">
+            <summary>
+            Credential for entities' operations.
+            </summary>
+        </member>
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.NONE">
+            <summary>
+            No permission. 
+            </summary>
+        </member>
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.OWN">
+            <summary>
+            Permission only for own entities.
+            </summary>
+        </member>
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.GROUP">
+            <summary>
+             Permission only for group entities.
+            </summary>
+        </member>
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.ALL">
+            <summary>
+            All permission. 
+            </summary>
+        </member>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationError">
+            <summary>
+            Representation of the operation error.
+            </summary>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationError.Code">
+            <summary>
+            Return the code of the error.
+            </summary>
+            <value>Code.</value>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationError.Message">
+            <summary>
+            Return the readable message for the error.
+            </summary>
+            <value>Message.</value>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationError.Arguments">
+            <summary>
+            Return the arguments for message.
+            </summary>
+            <value>Arguments.</value>
+        </member>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction">
+            <summary>
+            Representation of database transaction.
+            </summary>
+        </member>
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction.GetModelSet``1">
+            <summary>
+            Returns a collection of models of praticural type, where type is defined by the T parameter.
+            </summary>
+            <typeparam name="T">Model type.</typeparam>
+            <returns>Collection of models.</returns>
+        </member>
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction.SubmitChanges">
+            <summary>
+            Submits all changes created in current transaction to database. 
+            </summary>
+        </member>
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction.Close">
+            <summary>
+            Closes transaction.
+            </summary>
+        </member>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.NamespaceDoc">
+            <summary>
+            The <see cref="N:Com.Mobeelizer.Mobile.Wp7.Api"/> namespace contains Mobeelizer API. 
+            </summary>
+        </member>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback">
+            <summary>
+            Method invoked when the operation was finished.
+            </summary>
+            <param name="error">Null if method finished with success, error value otherwise.</param>
+        </member>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.NamespaceDoc">
+            <summary>
+            The <see cref="N:Com.Mobeelizer.Mobile.Wp7"/> namespace contains Mobeelizer entry point class.
+            </summary>
+        </member>
         <member name="T:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigurationSection">
             <summary>
             Configuration section class. 
@@ -14,49 +100,54 @@
             Get the connection Items.
             </summary>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginResult">
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model">
             <summary>
-            Login result.
+            Models base class.
             </summary>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginResult.GetLoginStatus">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.GetFile(System.String)">
             <summary>
-            Returns login status. If login process generates an unexpected exception, execution of  this method throws it.
+            Opens file from json entity.
             </summary>
-            <returns>Login status.</returns>
-            <exception cref="T:Microsoft.Practices.Mobile.Configuration.ConfigurationException">
-             Configuration exception can be thrown when models class are different than 'definition xml' defines.
-            </exception>
+            <param name="file">Json entity string value.</param>
+            <returns>File instance.</returns>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.SetFile(Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile)">
             <summary>
-            The result of creation a user session.
+            Generates json entity from file instance.
             </summary>
+            <param name="value">File instance.</param>
+            <returns>Json entity string value.</returns>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.OK">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.Guid">
             <summary>
-            The user session has been successfully created. 
+            Model guid.
             </summary>
+            <value>Unique model identificatior.</value>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.AUTHENTICATION_FAILURE">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.Owner">
             <summary>
-            Login, password and instance do not match to any existing users.
+            Model owner. 
             </summary>
+            <value>Owner of current model.</value>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.OTHER_FAILURE">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.Conflicted">
             <summary>
-            Unknown error. Look for the explanation in the instance logs and the application logs.
+            Conflicted flag.
             </summary>
+            <value>True if model is in conflict.</value>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.CONNECTION_FAILURE">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.Modified">
             <summary>
-            Connection error. Look for the explanation in the application logs.
+            Modification flag.
             </summary>
+            <value>True if model has been modified since last sync. </value>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginStatus.MISSING_CONNECTION_FAILURE">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.Deleted">
             <summary>
-            Missing connection. First login requires active Internet connection.
+            Deleted flag.
             </summary>
+            <value> True if model has been deleted since last sync.</value>
         </member>
         <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerDatabase">
             <summary>
@@ -79,95 +170,29 @@
             </summary>
             <returns>Opened transaction.</returns>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigProperty">
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode">
             <summary>
-            Configuration property class.
+            Modes define how SDK and network connections work.
             </summary>
         </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigProperty.Name">
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode.DEVELOPMENT">
             <summary>
-            Property name.
+            The connections won't be performed. 
             </summary>
         </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigProperty.Value">
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode.TEST">
             <summary>
-            Property value.
+            The connections will be established to test instances.
             </summary>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model">
+        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode.PRODUCTION">
             <summary>
-            Models base class.
-            </summary>
+            The connections will be established to production instances.
+            </summary> 
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.GetFile(System.String)">
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Configuration.NamespaceDoc">
             <summary>
-            Opens file from json entity.
-            </summary>
-            <param name="file">Json entity string value.</param>
-            <returns>File instance.</returns>
-        </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.SetFile(Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile)">
-            <summary>
-            Generates json entity from file instance.
-            </summary>
-            <param name="value">File instance.</param>
-            <returns>Json entity string value.</returns>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.guid">
-            <summary>
-            Model guid.
-            </summary>
-            <value>Unique model identificatior.</value>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.owner">
-            <summary>
-            Model owner. 
-            </summary>
-            <value>Owner of current model.</value>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.conflicted">
-            <summary>
-            Conflicted flag.
-            </summary>
-            <value>True if model is in conflict.</value>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.modified">
-            <summary>
-            Modification flag.
-            </summary>
-            <value>True if model has been modified since last sync. </value>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerWp7Model.deleted">
-            <summary>
-            Deleted flag.
-            </summary>
-            <value> True if model has been deleted since last sync.</value>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.NamespaceDoc">
-            <summary>
-            The <see cref="N:Com.Mobeelizer.Mobile.Wp7"/> namespace contains Mobeelizer entry point class.
-            </summary>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction">
-            <summary>
-            Representation of database transaction.
-            </summary>
-        </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction.GetModelSet``1">
-            <summary>
-            Returns a collection of models of praticural type, where type is defined by the T parameter.
-            </summary>
-            <typeparam name="T">Model type.</typeparam>
-            <returns>Collection of models.</returns>
-        </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction.SubmitChanges">
-            <summary>
-            Submits all changes created in current transaction to database. 
-            </summary>
-        </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerTransaction.Close">
-            <summary>
-            Closes transaction.
+            The <see cref="N:Com.Mobeelizer.Mobile.Wp7.Configuration"/> namespace contains classes for reading App.config file.
             </summary>
         </member>
         <member name="T:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerPropertiesCollection">
@@ -195,53 +220,66 @@
             <param name="name">Property name.</param>
             <returns>Configuration property.</returns>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginCallback">
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState">
             <summary>
-            References a method to be called when logging in completes.
-            </summary>
-            <param name="result">Login result.</param>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode">
-            <summary>
-            Modes define how SDK and network connections work.
+            Data saved on tombstoning process.
             </summary>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode.DEVELOPMENT">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.LoggedIn">
             <summary>
-            The connections won't be performed. 
+            Indicates whether user is logged in.
             </summary>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode.TEST">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.User">
             <summary>
-            The connections will be established to test instances.
+            User name.
             </summary>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerMode.PRODUCTION">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.Instance">
             <summary>
-            The connections will be established to production instances.
-            </summary> 
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncResult">
-            <summary>
-            Synchronizaion operation result.
+            Instance name.
             </summary>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncResult.GetSyncStatus">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.Password">
             <summary>
-            Returns synchronization status. If sync operations generates an unexpected exception, execution of  this method throws it.
-            </summary>
-            <returns>Sync status.</returns>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationResult">
-            <summary>
-            Notification result.
+            User password.
             </summary>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationResult.GetCommunicationStatus">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.SyncStatus">
             <summary>
-            Returns communication status. If notification operations generates an unexpected exception, execution of  this method throws it.
+            Synchronization status.
             </summary>
-            <returns>Comunication status.</returns>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.IsAllSynchronization">
+            <summary>
+            Indicates wheter it was all synchronization.
+            </summary>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.MobeelizerTombstoningState.SyncTicket">
+            <summary>
+            Synchronization ticket.
+            </summary>
+        </member>
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile">
+            <summary>
+            Mobeelizer file definition.
+            </summary>
+        </member>
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile.GetStream">
+            <summary>
+            File stream.
+            </summary>
+            <returns>Content of the file.</returns>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile.Guid">
+            <summary>
+            Unique file identificator.
+            </summary>
+        </member>
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile.Name">
+            <summary>
+            File name.
+            </summary>
         </member>
         <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncStatus">
             <summary>
@@ -302,27 +340,6 @@
             <param name="status">Sync status.</param>
             <returns>True if sync is running.</returns>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile">
-            <summary>
-            Mobeelizer file definition.
-            </summary>
-        </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile.GetStream">
-            <summary>
-            File stream.
-            </summary>
-            <returns>Content of the file.</returns>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile.Guid">
-            <summary>
-            Unique file identificator.
-            </summary>
-        </member>
-        <member name="P:Com.Mobeelizer.Mobile.Wp7.Api.IMobeelizerFile.Name">
-            <summary>
-            File name.
-            </summary>
-        </member>
         <member name="T:Com.Mobeelizer.Mobile.Wp7.Mobeelizer">
             <summary>
             Entry point to the Mobeelizer application that holds references to the user sessions and the database.
@@ -359,7 +376,7 @@
             Closes user session when yours application is closing.
             </summary>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.Login(System.String,System.String,System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.Login(System.String,System.String,System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Create a user session for the given login, password and instance.
             </summary>
@@ -368,7 +385,7 @@
             <param name="password">Password.</param>
             <param name="callback">Callback method.</param>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.Login(System.String,System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerLoginCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.Login(System.String,System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Create a user session for the given login, password and instance equal to the MOBEELIZER_MODE ("test" or "production").
             </summary>
@@ -390,7 +407,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.Sync(Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.Sync(Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Start a differential sync. You can check sync status using <see cref="E:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SyncStatusChanged"/> event.
             </summary>
@@ -399,7 +416,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SyncAll(Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SyncAll(Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Start a full sync. All unsynced data will be lost. You can check sync status using <see cref="E:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SyncStatusChanged"/> event.
             </summary>
@@ -440,14 +457,14 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.RegisterForRemoteNotifications(System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.RegisterForRemoteNotifications(System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Registers device to receive push notifications.
             </summary>
             <param name="chanelUri">Notification channel uri.</param>
             <param name="callback">Callback method.</param>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.UnregisterForRemoteNotifications(Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.UnregisterForRemoteNotifications(Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Unregisters device from receive push notifications.
             </summary>
@@ -456,7 +473,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotification(System.Collections.Generic.IDictionary{System.String,System.String},Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotification(System.Collections.Generic.IDictionary{System.String,System.String},Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Sends remote notification to all users on all devices.
             </summary>
@@ -466,7 +483,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToDevice(System.Collections.Generic.IDictionary{System.String,System.String},System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToDevice(System.Collections.Generic.IDictionary{System.String,System.String},System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Sends remote notification to all users on specified device.
             </summary>
@@ -477,7 +494,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToUsers(System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IList{System.String},Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToUsers(System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IList{System.String},Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Sends remote notification to given users.
             </summary>
@@ -488,7 +505,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToUsersOnDevice(System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IList{System.String},System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToUsersOnDevice(System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IList{System.String},System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Sends remote notification to given users on specified device.
             </summary>
@@ -500,7 +517,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToGroup(System.Collections.Generic.IDictionary{System.String,System.String},System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToGroup(System.Collections.Generic.IDictionary{System.String,System.String},System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Sends remote notification to given group.
             </summary>
@@ -511,7 +528,7 @@
             If user session is not active.
             </exception>
         </member>
-        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToGroupOnDevice(System.Collections.Generic.IDictionary{System.String,System.String},System.String,System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback)">
+        <member name="M:Com.Mobeelizer.Mobile.Wp7.Mobeelizer.SendRemoteNotificationToGroupOnDevice(System.Collections.Generic.IDictionary{System.String,System.String},System.String,System.String,Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerOperationCallback)">
             <summary>
             Sends remote notification to given group on specified device.
             </summary>
@@ -541,60 +558,19 @@
             True if user session is active.
             </value>
         </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncCallback">
+        <member name="T:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigProperty">
             <summary>
-            References a method to be called when sync operation completes.
-            </summary>
-            <param name="result">Synchronization result.</param>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCommunicationStatus">
-            <summary>
-            The result of communication.
+            Configuration property class.
             </summary>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCommunicationStatus.SUCCESS">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigProperty.Name">
             <summary>
-            Communication completed successfully.
+            Property name.
             </summary>
         </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCommunicationStatus.FAILURE">
+        <member name="P:Com.Mobeelizer.Mobile.Wp7.Configuration.MobeelizerConfigProperty.Value">
             <summary>
-            Connection error. Look for the explanation in the application logs.
-            </summary>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential">
-            <summary>
-            Credential for entities' operations.
-            </summary>
-        </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.NONE">
-            <summary>
-            No permission. 
-            </summary>
-        </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.OWN">
-            <summary>
-            Permission only for own entities.
-            </summary>
-        </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.GROUP">
-            <summary>
-             Permission only for group entities.
-            </summary>
-        </member>
-        <member name="F:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerCredential.ALL">
-            <summary>
-            All permission. 
-            </summary>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.NamespaceDoc">
-            <summary>
-            The <see cref="N:Com.Mobeelizer.Mobile.Wp7.Api"/> namespace contains Mobeelizer API. 
-            </summary>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Configuration.NamespaceDoc">
-            <summary>
-            The <see cref="N:Com.Mobeelizer.Mobile.Wp7.Configuration"/> namespace contains classes for reading App.config file.
+            Property value.
             </summary>
         </member>
         <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerSyncStatusChangedEventHandler">
@@ -602,12 +578,6 @@
             Delegate used to notify about synchronization status change.
             </summary>
             <param name="status">New sync status.</param>
-        </member>
-        <member name="T:Com.Mobeelizer.Mobile.Wp7.Api.MobeelizerNotificationCallback">
-            <summary>
-            References a method to be called when any of the notification operation completes.
-            </summary>
-            <param name="result">Notification operation result.</param>
         </member>
     </members>
 </doc>
