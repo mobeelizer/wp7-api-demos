@@ -68,7 +68,7 @@
                     <TextBlock x:Name="ApplicationTitle" Text="MOBEELIZER" Style="{StaticResource PhoneTextNormalStyle}"/>
                     <TextBlock Grid.Column="1" Text="{Binding SessionCode, StringFormat='Session code: {0}'}"/>
                 </Grid>
-                <TextBlock x:Name="PageTitle" Text="graph's conflicts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                <TextBlock x:Name="PageTitle" Text="relations" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             </StackPanel>
 
             <!--ContentPanel - place additional content here-->

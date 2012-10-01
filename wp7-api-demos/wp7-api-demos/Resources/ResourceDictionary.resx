@@ -224,10 +224,10 @@
     <value>Now using another user add or remove position in previously choosen order. Synchronize data.</value>
   </data>
   <data name="dialogRelationConflictsSyncText4" xml:space="preserve">
-    <value>Don't be afraid. Your orders are secure. Conflicts can also occour in more complicated structures - like orders and positions. Of course you can feel safe, we will handle them for you…</value>
+    <value />
   </data>
   <data name="dialogRelationConflictsSyncTitle" xml:space="preserve">
-    <value>Relations, conflicts - no problem at all…</value>
+    <value>Relations - no problem at all…</value>
   </data>
   <data name="footerWarning" xml:space="preserve">
     <value>Items marked with     were not synchronized, because other user edited them at the same time.</value>

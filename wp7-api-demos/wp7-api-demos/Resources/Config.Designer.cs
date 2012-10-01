@@ -61,7 +61,7 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://cloud.mobeelizer.com/sync/v2/.
+        ///   Looks up a localized string similar to https://cloud.mobeelizer.com/sync/v2.
         /// </summary>
         internal static string c_apiURL_host {
             get {

@@ -173,7 +173,7 @@
                                     <Rectangle Fill="{StaticResource PhoneAccentBrush}" />
                                     <Image Source="/Resources/icons/relationConflictsIcon.png" Height="70"  HorizontalAlignment="Right" />
                                 </Grid>
-                                <TextBlock Text="Relation conflicts" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
+                                <TextBlock Text="Relations" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" />
                                     </Grid>
                                 </Button>
                                 <Button Style="{StaticResource TileButtonStyle}" Command="{Binding PushNotificationPageCommand}">

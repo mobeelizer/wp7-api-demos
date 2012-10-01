@@ -313,7 +313,7 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t be afraid. Your orders are secure. Conflicts can also occour in more complicated structures - like orders and positions. Of course you can feel safe, we will handle them for you….
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string dialogRelationConflictsSyncText4 {
             get {
@@ -322,7 +322,7 @@ namespace wp7_api_demos.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Relations, conflicts - no problem at all….
+        ///   Looks up a localized string similar to Relations - no problem at all….
         /// </summary>
         public static string dialogRelationConflictsSyncTitle {
             get {
