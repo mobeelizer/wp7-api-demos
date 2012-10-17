@@ -4,6 +4,8 @@ The Mobeelizer Demos application is a set of examples for how to use the [Mobeel
 
 Please visit the [Mobeelizer site](http://www.mobeelizer.com/) to get more informations.
 
+Ready-to-use version of the Mobeelizer Demos is available on [Windows Phone Marketplace](http://www.windowsphone.com/pl-pl/store/app/mobeelizer-demo/7b192e31-56e6-4fd1-a854-e210f2b7b669).
+
 # Copyright
 
 Copyright 2012 Mobeelizer Ltd
