@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{5240e600-1deb-4cbd-9368-3330ce569fdf}" Title="Mobeelizer Demo" RuntimeType="Silverlight" Version="1.6.0.0" Genre="apps.normal"  Author="Mobeelizer" Description="This app contains examples of using mobeelizer in different scenarios. You can see how to sync data, binary files or how to handle conflicts. It's only a small possibilities what mobeelizer can do for you." Publisher="Mobeelizer Demo">
+  <App xmlns="" ProductID="{5240e600-1deb-4cbd-9368-3330ce569fdf}" Title="Mobeelizer Demo" RuntimeType="Silverlight" Version="1.6.0" Genre="apps.normal"  Author="Mobeelizer" Description="This app contains examples of using mobeelizer in different scenarios. You can see how to sync data, binary files or how to handle conflicts. It's only a small possibilities what mobeelizer can do for you." Publisher="Mobeelizer Demo">
     <IconPath IsRelative="true" IsResource="false">Resources/ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_IDENTITY_DEVICE"/>
